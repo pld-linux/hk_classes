@@ -1,12 +1,14 @@
+# TODO: add sqllite subpackage (make it build to /usr/lib/hk_classes/drivers first)
+
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
-Version:	0.6.3
+Version:	0.7
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
-# Source0-md5:	c842b4ed39eb3322a0b83bb84ebfc1e1
+# Source0-md5:	35c16e935947b0b41b31b8ce5f10d0f1
 Patch0:		%{name}-dir.patch
 Patch1:		%{name}-link.patch
 Patch2:		%{name}-iconv-in-libc.patch
@@ -18,7 +20,9 @@ BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-backend-devel >= 7.1
 BuildRequires:	postgresql-devel >= 7.1
+BuildRequires:	sqlite-devel
 BuildRequires:	unixODBC-devel
+
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
