@@ -1,0 +1,16 @@
+--- hk_classes-0.7.2/hk_sqliteclasses/Makefile.am.orig	2005-02-18 08:47:12.000000000 +0100
++++ hk_classes-0.7.2/hk_sqliteclasses/Makefile.am	2005-02-18 08:49:37.000000000 +0100
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@SQLITEINCDIR@
+ 
+ AM_CXXFLAGS= -Wall
+--- hk_classes-0.7.2/hk_sqlite3classes/Makefile.am.orig	2005-02-18 08:49:58.000000000 +0100
++++ hk_classes-0.7.2/hk_sqlite3classes/Makefile.am	2005-02-18 08:50:08.000000000 +0100
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@SQLITE3INCDIR@
+ 
+ AM_CXXFLAGS= -Wall
