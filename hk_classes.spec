@@ -108,7 +108,7 @@ Narzêdzia dzia³aj±ce z linii poleceñ dla hk_classes.
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
-echo "echo" >> Makefile.am
+%{__autoheader}
 %{__automake}
 
 %configure \
