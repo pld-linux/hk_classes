@@ -1,15 +1,14 @@
-# TODO: 
-# - Rethink /usr/lib/hk_classes/drivers -> /usr/lib 
-#   If changed check how it works with knoda.spec
-#
+# TODO:
+# -  dir-patch needs to be altered TIA
+
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Nie-graficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
-Version:	0.5.4
-Release:	1.2
+Version:	0.5.5
+Release:	0.1
 License:	GPL
 Group:		Libraries
-# Left hk-classes in Source0 alone - it's not %{name}
+# Leave hk-classes in Source0 alone - it's not %{name}
 Source0:	http://dl.sourceforge.net/sourceforge/hk-classes/%{name}-%{version}.tar.gz
 Patch0:		%{name}-dir.patch
 URL:		http://hk-classes.sourceforge.net/
