@@ -88,7 +88,7 @@ Sterownik PostgreSQL dla hk_classes.
 
 %package tools
 Summary:        Commandline tools 
-Summary(pl):    Narzêdzia konsolowe 
+Summary(pl):    Narzêdzia dzia³aj±ce z linii poleceñ
 Group:          Applications
 Requires:       %{name} = %{version}
 
@@ -96,7 +96,7 @@ Requires:       %{name} = %{version}
 Command line tools for hk_classes.
 
 %description tools  -l pl
-Narzêdzia linii poleceñ dla hk_classes.
+Narzêdzia dzia³aj±ce z linii poleceñ dla hk_classes.
 
 %prep
 %setup -q
