@@ -14,7 +14,7 @@ Patch1:		%{name}-link.patch
 Patch2:		%{name}-iconv-in-libc.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
-BuildRequires:	automake >= 1.7.6
+BuildRequires:	automake >= 1:1.7.6
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	mysql-devel
