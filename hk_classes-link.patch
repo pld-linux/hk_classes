@@ -16,7 +16,7 @@
  
  
 -libhk_postgresdriver_la_LDFLAGS = -version-info 0:1:0 -lpq  -lhk_classes -L../hk_classes -L@POSTGRESLIBDIR@
-+libhk_postgresdriver_la_LDFLAGS = -version-info 0:1:0 ../hk_classes/libhq_classes.la -L@POSTGRESLIBDIR@ -lpq
++libhk_postgresdriver_la_LDFLAGS = -version-info 0:1:0 ../hk_classes/libhk_classes.la -L@POSTGRESLIBDIR@ -lpq
  
  lib_LTLIBRARIES =libhk_postgresdriver.la
  
