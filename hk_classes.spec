@@ -2,7 +2,7 @@ Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Nie-graficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
 Version:	0.5.5
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Libraries
 # Leave hk-classes in Source0 alone - it's not %{name}
@@ -14,6 +14,8 @@ BuildRequires:	automake
 BuildRequires:	libstdc++-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-backend-devel >= 7.1
+# Needs <libpq-fe.h>
+BuildRequires:	postgresql-devel >= 7.1
 BuildRequires:	unixODBC-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
