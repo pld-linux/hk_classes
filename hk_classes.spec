@@ -1,12 +1,12 @@
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
-Version:	0.6
-Release:	4
+Version:	0.6.1
+Release:	5.1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
-# Source0-md5:	9bf3217c35795d83f29a3af7b6bb3ecb
+# Source0-md5:	053054de7d99908c0f4eff25c570b53a
 Patch0:		%{name}-dir.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
