@@ -1,11 +1,3 @@
-# TODO: Fix compilation:
-#   /bin/sh ../libtool --mode=compile g++ -DHAVE_CONFIG_H -I. -I. -I..    
-#     -Wall -I/usr/include/python2.2 -O2 -march=i686 -c -o hk_definitions.lo 
-#     `test -f 'hk_definitions.cpp' || echo './'`hk_definitions.cpp
-#   ../libtool[338]: s%^.*/%%: not found
-#   ../libtool[497]: -e: not found
-#   (...)
-
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
@@ -19,6 +11,7 @@ URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake 
 BuildRequires:	libstdc++-devel
+BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-backend-devel >= 7.1
 BuildRequires:	postgresql-devel >= 7.1
@@ -110,6 +103,8 @@ Narzêdzia linii poleceñ dla hk_classes.
 %patch -p1
 
 %build
+# supplied libtool is broken (C++)
+%{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 echo "echo" >> Makefile.am
@@ -121,8 +116,7 @@ echo "echo" >> Makefile.am
 	--with-hk_classes-drvdir=%{_libdir}/%{name}/drivers \
 	--enable-static
 
-#%%{__make}
-make
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
