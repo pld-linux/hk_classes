@@ -1,5 +1,5 @@
---- hk_classes-0.5.4/acinclude.m4.orig	Sun Aug 18 16:35:37 2002
-+++ hk_classes-0.5.4/acinclude.m4	Thu Nov 21 11:47:35 2002
+--- hk_classes-0.5.5/acinclude.m4.orig	Sun Aug 18 16:35:37 2002
++++ hk_classes-0.5.5/acinclude.m4	Thu Nov 21 11:47:35 2002
 @@ -29,6 +29,15 @@
   HK_CLASSESDIR=$prefix
   HK_CLASSESINCDIR=$HK_CLASSESDIR/include
@@ -16,8 +16,8 @@
  if test "$with_hk_classes_incdir" != ""; then
  HK_CLASSESINCDIR=$with_hk_classes_incdir
  fi
---- hk_classes-0.5.4/configure.in.orig	Sat Sep 21 16:41:31 2002
-+++ hk_classes-0.5.4/configure.in	Thu Nov 21 11:48:16 2002
+--- hk_classes-0.5.5/configure.in.orig	Sat Sep 21 16:41:31 2002
++++ hk_classes-0.5.5/configure.in	Thu Nov 21 11:48:16 2002
 @@ -8,6 +8,8 @@
  AC_ARG_WITH(mysql-dir,[  --with-mysql-dir=PATH   Path to the Mysql directory],:,:)
  AC_ARG_WITH(mysql-incdir,[  --with-mysql-incdir=PATH   Path to the Mysql header files],:,:)
@@ -27,19 +27,27 @@
  AC_ARG_WITH(hk_classes-incdir,[  --with-hk_classes-incdir=PATH   Path for the hk_classes header files],:,:)
  
  AC_ARG_WITH(postgres-dir,[  --with-postgres-dir=PATH   Path to the postgres directory],:,:)
---- hk_classes-0.5.4/hk_mysqlclasses/Makefile.am.orig	Wed Sep  4 19:11:59 2002
-+++ hk_classes-0.5.4/hk_mysqlclasses/Makefile.am	Thu Nov 21 12:44:43 2002
+--- hk_classes-0.5.5/hk_mysqlclasses/Makefile.am.orig	Wed Sep  4 19:11:59 2002
++++ hk_classes-0.5.5/hk_mysqlclasses/Makefile.am	Thu Nov 21 12:44:43 2002
 @@ -1,4 +1,4 @@
 -libdir=@HK_CLASSESDIR@/drivers
 +libdir=@HK_DRIVERSDIR@
- INCLUDES= -I../hk_classes -I@MYSQLINCDIR@ -I$(includedir) 
+ INCLUDES= -I../hk_classes -I@MYSQLINCDIR@
  AM_CXXFLAGS= -Wall
  
---- hk_classes-0.5.4/hk_postgresclasses/Makefile.am.orig	Tue Aug 13 19:58:33 2002
-+++ hk_classes-0.5.4/hk_postgresclasses/Makefile.am	Thu Nov 21 12:44:58 2002
+--- hk_classes-0.5.5/hk_postgresclasses/Makefile.am.orig	Tue Aug 13 19:58:33 2002
++++ hk_classes-0.5.5/hk_postgresclasses/Makefile.am	Thu Nov 21 12:44:58 2002
 @@ -1,4 +1,4 @@
 -libdir=@HK_CLASSESDIR@/drivers
 +libdir=@HK_DRIVERSDIR@
- INCLUDES=   -I../hk_classes -I@POSTGRESINCDIR@ -I$(includedir)
+ INCLUDES=   -I../hk_classes -I@POSTGRESINCDIR@
  
  libhk_postgresdriver_la_LDFLAGS = -version-info 0:0:0 -lpq  -L../hk_classes -L@POSTGRESLIBDIR@
+--- hk_classes-0.5.5/hk_odbcclasses/Makefile.am.orig	Mon Nov  4 19:41:17 2002
++++ hk_classes-0.5.5/hk_odbcclasses/Makefile.am	Tue Dec  3 17:13:54 2002
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@ODBCINCDIR@ 
+ AM_CXXFLAGS= -Wall
+ 
