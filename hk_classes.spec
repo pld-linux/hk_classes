@@ -17,6 +17,7 @@ BuildRequires:	automake
 BuildRequires:	libstdc++-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-backend-devel >= 7.1
+BuildRequires:	unixODBC-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -62,6 +63,18 @@ MySQL driver for hk_classes.
 
 %description driver-mysql -l pl
 Sterownik MySQL dla hk_classes.
+
+%package driver-odbc
+Summary:	unixODBC driver for hk_classes
+Summary(pl):	Sterownik unixODBC dla hk_classes
+Group:		Libraries
+Requires:	%{name} = %{version}
+
+%description driver-odbc
+unixODBC driver for hk_classes.
+
+%description driver-odbc -l pl
+Sterownik unixODBC dla hk_classes.
 
 %package driver-postgresql
 Summary:	PostgreSQL driver for hk_classes
@@ -121,8 +134,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files driver-mysql
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_mysqldriver.??*
+%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_mysqldriver.so*
+%{_libdir}/%{name}/drivers/libhk_mysqldriver.la
+
+%files driver-odbc
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_odbcdriver.so*
+%{_libdir}/%{name}/drivers/libhk_odbcdriver.la
 
 %files driver-postgresql
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_postgresdriver.??*
+%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_postgresdriver.so*
+%{_libdir}/%{name}/drivers/libhk_postgresdriver.la
