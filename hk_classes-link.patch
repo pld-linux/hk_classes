@@ -1,0 +1,33 @@
+--- hk_classes-0.6.1/hk_mysqlclasses/Makefile.am.orig	Wed Oct 22 17:01:34 2003
++++ hk_classes-0.6.1/hk_mysqlclasses/Makefile.am	Wed Oct 22 17:10:03 2003
+@@ -3,7 +3,7 @@
+ 
+ AM_CXXFLAGS= -Wall
+ 
+-libhk_mysqldriver_la_LDFLAGS = -version-info 3:4:0 -lmysqlclient -L../hk_classes -L@MYSQLLIBDIR@ -lhk_classes
++libhk_mysqldriver_la_LDFLAGS = -version-info 3:4:0 ../hk_classes/libhk_classes.la -L@MYSQLLIBDIR@ -lmysqlclient
+ 
+ lib_LTLIBRARIES = 	libhk_mysqldriver.la
+ 
+--- hk_classes-0.6.1/hk_postgresclasses/Makefile.am.orig	Wed Oct 22 17:01:34 2003
++++ hk_classes-0.6.1/hk_postgresclasses/Makefile.am	Wed Oct 22 17:12:25 2003
+@@ -2,7 +2,7 @@
+ INCLUDES=   -I../hk_classes -I@POSTGRESINCDIR@
+ 
+ 
+-libhk_postgresdriver_la_LDFLAGS = -version-info 0:1:0 -lpq  -lhk_classes -L../hk_classes -L@POSTGRESLIBDIR@
++libhk_postgresdriver_la_LDFLAGS = -version-info 0:1:0 ../hk_classes/libhq_classes.la -L@POSTGRESLIBDIR@ -lpq
+ 
+ lib_LTLIBRARIES =libhk_postgresdriver.la
+ 
+--- hk_classes-0.6.1/hk_odbcclasses/Makefile.am.orig	Wed Oct 22 17:01:34 2003
++++ hk_classes-0.6.1/hk_odbcclasses/Makefile.am	Wed Oct 22 17:11:49 2003
+@@ -2,7 +2,7 @@
+ INCLUDES= -I../hk_classes -I@ODBCINCDIR@ 
+ AM_CXXFLAGS= -Wall
+ 
+-libhk_odbcdriver_la_LDFLAGS = -version-info 0:0:0 -l@ODBCLIBRARY@  -L@ODBCLIBDIR@ -lhk_classes  -L../hk_classes 
++libhk_odbcdriver_la_LDFLAGS = -version-info 0:0:0 ../hk_classes/libhk_classes.la -L@ODBCLIBDIR@ -l@ODBCLIBRARY@
+ 
+ lib_LTLIBRARIES = 	libhk_odbcdriver.la
+ 
