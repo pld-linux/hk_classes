@@ -1,17 +1,21 @@
-# TODO: add sqllite subpackage (make it build to /usr/lib/hk_classes/drivers first)
+# TODO: Fix sqlite drivers to build to /usr/lib/hk_classes/drivers/ and then enable
+# TODO: Add python package 
+# TODO: patch3 should be rewritten to search for .pyc and .py not only .pyc and sent back
 
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
-Version:	0.7
+Version:	0.7.2
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
-# Source0-md5:	35c16e935947b0b41b31b8ce5f10d0f1
+# Source0-md5:	e7a9210791432a2458e7e174d84d5a0a
 Patch0:		%{name}-dir.patch
 Patch1:		%{name}-link.patch
 Patch2:		%{name}-iconv-in-libc.patch
+Patch3:		%{name}-PLD-search-for-pyc-and-in-usr-share.patch
+
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.7.6
@@ -21,6 +25,7 @@ BuildRequires:	mysql-devel
 BuildRequires:	postgresql-backend-devel >= 7.1
 BuildRequires:	postgresql-devel >= 7.1
 BuildRequires:	sqlite-devel
+BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
 
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -93,6 +98,32 @@ PostgreSQL driver for hk_classes.
 %description driver-postgresql -l pl
 Sterownik PostgreSQL dla hk_classes.
 
+
+#%package driver-sqlite2
+#Summary:	SQLite v2 driver for hk_classes
+#Summary(pl):	Sterownik SQLite v2 dla hk_classes
+#Group:		Libraries
+#Requires:	%{name} = %{version}-%{release}
+
+#%description driver-sqlite2
+#SQLite version 2.x driver for hk_classes.
+
+#%description driver-sqlite2 -l pl
+#Sterownik SQLite wersji 2.x dla hk_classes.
+
+#%package driver-sqlite3
+#Summary:	SQLite v3 driver for hk_classes
+#Summary(pl):	Sterownik SQLite v3 dla hk_classes
+#Group:		Libraries
+#Requires:	%{name} = %{version}-%{release}
+
+#%description driver-sqlite3
+#SQLite version 3.x driver for hk_classes.
+
+#%description driver-sqlite3 -l pl
+#Sterownik SQLite w wersji 3.x dla hk_classes.
+
+
 %package tools
 Summary:	Commandline tools
 Summary(pl):	Narzêdzia dzia³aj±ce z linii poleceñ
@@ -110,6 +141,7 @@ Narzêdzia dzia³aj±ce z linii poleceñ dla hk_classes.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p0 
 
 %build
 # supplied libtool is broken (C++)
@@ -124,7 +156,6 @@ Narzêdzia dzia³aj±ce z linii poleceñ dla hk_classes.
 	--with-hk_classes-incdir=%{_includedir}/%{name} \
 	--with-hk_classes-drvdir=%{_libdir}/%{name}/drivers \
 	--enable-static
-
 %{__make}
 
 %install
@@ -169,6 +200,15 @@ rm -rf $RPM_BUILD_ROOT
 %files driver-postgresql
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_postgresdriver.so*
+
+
+#%files driver-sqlite2
+#%defattr(644,root,root,755)
+#%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_sqlite2driver.so*
+
+#%files driver-sqlite3
+#%defattr(644,root,root,755)
+#%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_sqlite3driver.so*
 
 %files tools
 %defattr(644,root,root,755)
