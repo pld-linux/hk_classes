@@ -1,6 +1,3 @@
-# TODO:
-# -  dir-patch needs to be altered TIA
-
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Nie-graficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
