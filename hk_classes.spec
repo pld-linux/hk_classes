@@ -5,7 +5,7 @@ Version:	0.6
 Release:	0.1
 License:	GPL
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/sourceforge/hk-classes/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-dir.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
