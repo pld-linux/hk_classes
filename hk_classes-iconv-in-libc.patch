@@ -1,0 +1,18 @@
+--- hk_classes-0.6.2a/acinclude.m4.orig	Tue Mar 30 11:00:06 2004
++++ hk_classes-0.6.2a/acinclude.m4	Tue Mar 30 13:42:18 2004
+@@ -332,6 +332,7 @@
+   dnl accordingly.
+   dnl AC_LIB_LINKFLAGS_BODY([iconv])
+ 
++  AC_CHECK_FUNC(iconv, [ac_liconv="no"], [
+   AC_MSG_CHECKING([if libiconv is present])
+   ac_save_LIBS="$LIBS"
+   LIBS="$ac_save_LIBS -liconv"
+@@ -342,6 +343,7 @@
+     LIBS="$ac_save_LIBS"
+     ac_liconv="no")
+   AC_MSG_RESULT($ac_liconv)
++  ])
+   dnl Add $INCICONV to CPPFLAGS before performing the following checks,
+   dnl because if the user has installed libiconv and not disabled its use
+   dnl via --without-libiconv-prefix, he wants to use it. The first
