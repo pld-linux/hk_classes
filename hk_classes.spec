@@ -1,11 +1,10 @@
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Nie-graficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
-Version:	0.5.5
+Version:	0.5.6
 Release:	1
 License:	GPL
 Group:		Libraries
-# Leave hk-classes in Source0 alone - it's not %{name}
 Source0:	http://dl.sourceforge.net/sourceforge/hk-classes/%{name}-%{version}.tar.gz
 Patch0:		%{name}-dir.patch
 URL:		http://hk-classes.sourceforge.net/
@@ -14,7 +13,6 @@ BuildRequires:	automake
 BuildRequires:	libstdc++-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-backend-devel >= 7.1
-# Needs <libpq-fe.h>
 BuildRequires:	postgresql-devel >= 7.1
 BuildRequires:	unixODBC-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -87,6 +85,18 @@ PostgreSQL driver for hk_classes.
 %description driver-postgresql -l pl
 Sterownik PostgreSQL dla hk_classes.
 
+%package tools
+Summary:        Commandline tools 
+Summary(pl):    Narzêdzia konsolowe 
+Group:          Applications
+Requires:       %{name} = %{version}
+
+%description tools
+Command line tools for hk_classes.
+
+%description tools  -l pl
+Narzêdzia linii poleceñ dla hk_classes.
+
 %prep
 %setup -q
 %patch -p1
@@ -145,3 +155,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_postgresdriver.so*
 %{_libdir}/%{name}/drivers/libhk_postgresdriver.la
+
+%files tools
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/hk_*
+%{_mandir}/man?/*
