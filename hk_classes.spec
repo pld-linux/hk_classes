@@ -10,7 +10,7 @@ Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-dir.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
-BuildRequires:	automake 
+BuildRequires:	automake
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	mysql-devel
@@ -88,7 +88,7 @@ PostgreSQL driver for hk_classes.
 Sterownik PostgreSQL dla hk_classes.
 
 %package tools
-Summary:	Commandline tools 
+Summary:	Commandline tools
 Summary(pl):	Narzêdzia dzia³aj±ce z linii poleceñ
 Group:		Applications
 Requires:	%{name} = %{version}
