@@ -7,7 +7,7 @@
 #   (...)
 
 Summary:	Non-visual routines for database frontend applications
-Summary(pl):	Nie-graficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
+Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
 Version:	0.6
 Release:	0.1
@@ -30,7 +30,7 @@ hk_classes is a set of non-visual routines which allow you to develop
 database frontend applications as easy as possible.
 
 %description -l pl
-hk_classes to zbiór nie-graficznych funkcji, pozwalaj±cych na mo¿liwie
+hk_classes to zbiór niegraficznych funkcji, pozwalaj±cych na mo¿liwie
 naj³atwiejsze tworzenie aplikacji bêd±cych frontendami do baz danych.
 
 %package devel
