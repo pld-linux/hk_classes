@@ -28,9 +28,8 @@ BuildRequires:	sqlite-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
 BuildRequires:	python-devel
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
 Conflicts:      knoda < 0.7.2
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 hk_classes is a set of non-visual routines which allow you to develop
