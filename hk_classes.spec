@@ -6,7 +6,7 @@ Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
 Version:	0.7.2
-Release:	2
+Release:	3
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
@@ -29,6 +29,8 @@ BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
 BuildRequires:	python-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+Conflicts:      knoda < 0.7.2
 
 %description
 hk_classes is a set of non-visual routines which allow you to develop
