@@ -16,7 +16,6 @@ Patch1:		%{name}-link.patch
 Patch2:		%{name}-iconv-in-libc.patch
 Patch3:		%{name}-PLD-search-for-pyc-and-in-usr-share.patch
 Patch4:		%{name}-dir2.patch
-
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.7.6
@@ -28,7 +27,6 @@ BuildRequires:	postgresql-devel >= 7.1
 BuildRequires:	sqlite-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
-
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -99,7 +97,6 @@ PostgreSQL driver for hk_classes.
 %description driver-postgresql -l pl
 Sterownik PostgreSQL dla hk_classes.
 
-
 %package driver-sqlite2
 Summary:	SQLite v2 driver for hk_classes
 Summary(pl):	Sterownik SQLite v2 dla hk_classes
@@ -110,7 +107,7 @@ Requires:	%{name} = %{version}-%{release}
 SQLite version 2.x driver for hk_classes.
 
 %description driver-sqlite2 -l pl
-Sterownik SQLite wersji 2.x dla hk_classes.
+Sterownik SQLite w wersji 2.x dla hk_classes.
 
 %package driver-sqlite3
 Summary:	SQLite v3 driver for hk_classes
