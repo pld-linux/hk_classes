@@ -8,6 +8,7 @@ Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
 # Source0-md5:	053054de7d99908c0f4eff25c570b53a
 Patch0:		%{name}-dir.patch
+Patch1:		%{name}-link.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1.7.6
@@ -101,7 +102,8 @@ Narzêdzia dzia³aj±ce z linii poleceñ dla hk_classes.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 # supplied libtool is broken (C++)
