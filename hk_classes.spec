@@ -88,10 +88,10 @@ PostgreSQL driver for hk_classes.
 Sterownik PostgreSQL dla hk_classes.
 
 %package tools
-Summary:        Commandline tools 
-Summary(pl):    Narzêdzia dzia³aj±ce z linii poleceñ
-Group:          Applications
-Requires:       %{name} = %{version}
+Summary:	Commandline tools 
+Summary(pl):	Narzêdzia dzia³aj±ce z linii poleceñ
+Group:		Applications
+Requires:	%{name} = %{version}
 
 %description tools
 Command line tools for hk_classes.
