@@ -2,13 +2,14 @@ Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
 Version:	0.6.2a
-Release:	2
+Release:	3
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
 # Source0-md5:	50bdab3d81488b35e3d9809f57aa4a8c
 Patch0:		%{name}-dir.patch
 Patch1:		%{name}-link.patch
+Patch2:		%{name}-iconv-in-libc.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1.7.6
@@ -18,7 +19,6 @@ BuildRequires:	mysql-devel
 BuildRequires:	postgresql-backend-devel >= 7.1
 BuildRequires:	postgresql-devel >= 7.1
 BuildRequires:	unixODBC-devel
-BuildConflicts:	libiconv-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -33,7 +33,7 @@ naj³atwiejsze tworzenie aplikacji bêd±cych frontendami do baz danych.
 Summary:	Header files for hk_classes
 Summary(pl):	Pliki nag³ówkowe hk_classes
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for hk_classes.
@@ -45,7 +45,7 @@ Pliki nag³ówkowe hk_classes.
 Summary:	Static hk_classes library
 Summary(pl):	Statyczna biblioteka hk_classes
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static hk_classes library.
@@ -57,7 +57,7 @@ Statyczna biblioteka hk_classes.
 Summary:	MySQL driver for hk_classes
 Summary(pl):	Sterownik MySQL dla hk_classes
 Group:		Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description driver-mysql
 MySQL driver for hk_classes.
@@ -69,7 +69,7 @@ Sterownik MySQL dla hk_classes.
 Summary:	unixODBC driver for hk_classes
 Summary(pl):	Sterownik unixODBC dla hk_classes
 Group:		Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description driver-odbc
 unixODBC driver for hk_classes.
@@ -81,7 +81,7 @@ Sterownik unixODBC dla hk_classes.
 Summary:	PostgreSQL driver for hk_classes
 Summary(pl):	Sterownik PostgreSQL dla hk_classes
 Group:		Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description driver-postgresql
 PostgreSQL driver for hk_classes.
@@ -93,7 +93,7 @@ Sterownik PostgreSQL dla hk_classes.
 Summary:	Commandline tools
 Summary(pl):	Narzêdzia dzia³aj±ce z linii poleceñ
 Group:		Applications
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description tools
 Command line tools for hk_classes.
@@ -105,6 +105,7 @@ Narzêdzia dzia³aj±ce z linii poleceñ dla hk_classes.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 # supplied libtool is broken (C++)
@@ -127,6 +128,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# drivers are dlopened by *.so
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/drivers/lib*.{la,a}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -153,17 +157,14 @@ rm -rf $RPM_BUILD_ROOT
 %files driver-mysql
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_mysqldriver.so*
-%{_libdir}/%{name}/drivers/libhk_mysqldriver.la
 
 %files driver-odbc
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_odbcdriver.so*
-%{_libdir}/%{name}/drivers/libhk_odbcdriver.la
 
 %files driver-postgresql
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_postgresdriver.so*
-%{_libdir}/%{name}/drivers/libhk_postgresdriver.la
 
 %files tools
 %defattr(644,root,root,755)
