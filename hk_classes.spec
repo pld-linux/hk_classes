@@ -10,7 +10,7 @@ Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-dir.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
-BuildRequires:	automake
+BuildRequires:	automake >= 1.7.6
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	mysql-devel
