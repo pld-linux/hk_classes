@@ -96,7 +96,7 @@ Requires:	%{name} = %{version}
 %description tools
 Command line tools for hk_classes.
 
-%description tools  -l pl
+%description tools -l pl
 Narzêdzia dzia³aj±ce z linii poleceñ dla hk_classes.
 
 %prep
