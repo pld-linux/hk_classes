@@ -1,16 +1,18 @@
 # TODO: Make python build *.pyo also and include it instead of *.py
 # TODO: patch3 should be rewritten to search for .pyc and .py not only .pyc and sent back
 # TODO: Join dir.patch and dir2.patch
-
+#
+# Conditional build:
+%bcond_without	static_libs # don't build static library
+#
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
-Version:	0.7.3
-Release:	2
+Version:	0.7.4
+Release:	0.1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
-# Source0-md5:	722ef942d896dce8febe7b949c6c39e1
 Patch0:		%{name}-dir.patch
 Patch1:		%{name}-link.patch
 Patch2:		%{name}-iconv-in-libc.patch
@@ -21,6 +23,7 @@ BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.7.6
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
+BuildRequires:	Firebird-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-backend-devel >= 7.1
 BuildRequires:	postgresql-devel >= 7.1
@@ -62,6 +65,18 @@ Static hk_classes library.
 
 %description static -l pl
 Statyczna biblioteka hk_classes.
+
+%package driver-firebird
+Summary:	Firebird driver for hk_classes
+Summary(pl):	Sterownik Firebird dla hk_classes
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description driver-firebird
+Firebird driver for hk_classes.
+
+%description driver-firebird -l pl
+Sterownik Firebird dla hk_classes.
 
 %package driver-mysql
 Summary:	MySQL driver for hk_classes
@@ -168,7 +183,7 @@ Narzêdzia dzia³aj±ce z linii poleceñ dla hk_classes.
 	--with-hk_classes-dir=%{_libdir} \
 	--with-hk_classes-incdir=%{_includedir}/%{name} \
 	--with-hk_classes-drvdir=%{_libdir}/%{name}/drivers \
-	--enable-static
+	%{?with_static_libs:--enable-static=yes}
 %{__make}
 
 %install
@@ -198,9 +213,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.la
 %attr(755,root,root) %{_libdir}/lib*.so
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
+%endif
+
+%files driver-firebird
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_firebirddriver.so*
 
 %files driver-mysql
 %defattr(644,root,root,755)
