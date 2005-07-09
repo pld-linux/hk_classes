@@ -13,6 +13,7 @@ Release:	0.1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
+# Source0-md5:	5bab6d78343120478ec93bbd47e02f3a
 Patch0:		%{name}-dir.patch
 Patch1:		%{name}-link.patch
 Patch2:		%{name}-iconv-in-libc.patch
