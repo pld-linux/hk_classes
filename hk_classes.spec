@@ -164,6 +164,17 @@ Command line tools for hk_classes.
 %description tools -l pl
 Narzêdzia dzia³aj±ce z linii poleceñ dla hk_classes.
 
+%package apidocs 
+Summary:	API documentation for hk_classes
+Summary(pl):	Dokumentacja API dla hk_classes
+Group:		Documentation
+
+%description apidocs 
+API documentation for hk_classes.
+
+%description apidocs -l pl
+Dokumentacja API dla hk_classes.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -195,6 +206,8 @@ rm -rf $RPM_BUILD_ROOT
 
 # drivers are dlopened by *.so
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/drivers/lib*.{la,a}
+# remove Makefiles from docs for %%files apidocs simplification
+rm -f documentation/{api,tutorial}/Makefile*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -255,3 +268,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/hk_*
 %{_mandir}/man?/*
+
+%files apidocs
+%defattr(644,root,root,755)
+%doc documentation/api documentation/tutorial
