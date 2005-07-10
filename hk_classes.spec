@@ -1,6 +1,5 @@
 # TODO: Make python build *.pyo also and include it instead of *.py
 # TODO: patch3 should be rewritten to search for .pyc and .py not only .pyc and sent back
-# TODO: Join dir.patch and dir2.patch
 #
 # Conditional build:
 %bcond_without	static_libs # don't build static library
@@ -9,7 +8,7 @@ Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
 Version:	0.7.4
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
@@ -18,7 +17,6 @@ Patch0:		%{name}-dir.patch
 Patch1:		%{name}-link.patch
 Patch2:		%{name}-iconv-in-libc.patch
 Patch3:		%{name}-PLD-search-for-pyc-and-in-usr-share.patch
-Patch4:		%{name}-dir2.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.7.6
@@ -181,7 +179,6 @@ Dokumentacja API dla hk_classes.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
 # supplied libtool is broken (C++)
