@@ -203,8 +203,10 @@ rm -rf $RPM_BUILD_ROOT
 
 # drivers are dlopened by *.so
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/drivers/lib*.{la,a}
+
+cp -a documentation apidocs
 # remove Makefiles from docs for %%files apidocs simplification
-rm -f documentation/{api,tutorial}/Makefile*
+rm -f apidocs/{api,tutorial}/Makefile*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -268,4 +270,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files apidocs
 %defattr(644,root,root,755)
-%doc documentation/api documentation/tutorial
+%doc apidocs/api apidocs/tutorial
