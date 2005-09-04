@@ -4,15 +4,19 @@
 # Conditional build:
 %bcond_without	static_libs # don't build static library
 #
+%define		_ver	0.8
+%define		_test	test1
+%define		_rel	0.1
+#
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
-Version:	0.7.4
-Release:	1
+Version:	%{_ver}
+Release:	0.%{_test}.%{_rel}
 License:	GPL
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.bz2
-# Source0-md5:	5bab6d78343120478ec93bbd47e02f3a
+Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{_ver}-%{_test}.tar.gz
+# Source0-md5:	cbe8cfb31a0d04fba4743627bb6e61b7
 Patch0:		%{name}-dir.patch
 Patch1:		%{name}-link.patch
 Patch2:		%{name}-iconv-in-libc.patch
@@ -174,7 +178,7 @@ API documentation for hk_classes.
 Dokumentacja API dla hk_classes.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{_ver}-%{_test}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
