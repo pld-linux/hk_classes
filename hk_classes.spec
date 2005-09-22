@@ -5,7 +5,7 @@
 %bcond_without	static_libs # don't build static library
 #
 %define		_ver	0.8
-%define		_test	test1
+%define		_test	test2
 %define		_rel	0.1
 #
 Summary:	Non-visual routines for database frontend applications
@@ -16,7 +16,7 @@ Release:	0.%{_test}.%{_rel}
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{_ver}-%{_test}.tar.gz
-# Source0-md5:	cbe8cfb31a0d04fba4743627bb6e61b7
+# Source0-md5:	56bd57f8b633522dc8bea84bef169dc8
 Patch0:		%{name}-dir.patch
 Patch1:		%{name}-link.patch
 Patch2:		%{name}-iconv-in-libc.patch
