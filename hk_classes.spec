@@ -4,19 +4,15 @@
 # Conditional build:
 %bcond_without	static_libs # don't build static library
 #
-%define		_ver	0.8
-%define		_test	test2
-%define		_rel	0.1
-#
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
-Version:	%{_ver}
-Release:	0.%{_test}.%{_rel}
+Version:	0.8
+Release:	0.1
 License:	GPL
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{_ver}-%{_test}.tar.gz
-# Source0-md5:	56bd57f8b633522dc8bea84bef169dc8
+Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.gz
+# Source0-md5:	c5e3d5542037309127eddf532c91895b
 Patch0:		%{name}-dir.patch
 Patch1:		%{name}-link.patch
 Patch2:		%{name}-iconv-in-libc.patch
@@ -34,6 +30,7 @@ BuildRequires:	sqlite-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
 BuildRequires:	python-devel
+BuildRequires:	xbase-devel >= 2.0.0
 Conflicts:      knoda < 0.7.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -141,6 +138,18 @@ SQLite version 3.x driver for hk_classes.
 %description driver-sqlite3 -l pl
 Sterownik SQLite w wersji 3.x dla hk_classes.
 
+%package driver-xbase
+Summary:	xbase driver for hk_classes
+Summary(pl):	Sterownik xbase dla hk_classes
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description driver-xbase
+xbase driver for hk_classes.
+
+%description driver-xbase -l pl
+Sterownik xbase dla hk_classes.
+
 %package -n python-%{name}
 Summary:        Python interface to %{name}
 Summary(pl):    Interfejs do %{name} dla jezyka Python
@@ -178,7 +187,7 @@ API documentation for hk_classes.
 Dokumentacja API dla hk_classes.
 
 %prep
-%setup -q -n %{name}-%{_ver}-%{_test}
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -260,6 +269,10 @@ rm -rf $RPM_BUILD_ROOT
 %files driver-sqlite3
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_sqlite3driver.so*
+
+%files driver-xbase
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_xbasedriver.so*
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
