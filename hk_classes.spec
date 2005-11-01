@@ -24,8 +24,10 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	Firebird-devel
 BuildRequires:	mysql-devel
+BuildRequires:	pkgconfig
 BuildRequires:	postgresql-backend-devel >= 7.1
 BuildRequires:	postgresql-devel >= 7.1
+BuildRequires:	rpm-pythonprov
 BuildRequires:	sqlite-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
