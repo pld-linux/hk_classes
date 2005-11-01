@@ -32,7 +32,7 @@ BuildRequires:	sqlite-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
 BuildRequires:	python-devel
-BuildRequires:	xbase-devel >= 2.0.0
+BuildRequires:	xbsql-devel
 Conflicts:      knoda < 0.7.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
