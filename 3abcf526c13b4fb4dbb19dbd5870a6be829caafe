@@ -1,0 +1,1 @@
+- fixed default driver dir (hk_drivermanager::path return %{_libdir}/hk_classes + /drivers)
