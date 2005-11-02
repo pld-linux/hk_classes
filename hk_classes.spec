@@ -196,6 +196,7 @@ Dokumentacja API dla hk_classes.
 %patch3 -p1
 
 %build
+%{__sed} -i 's,\$(HK_CLASSESDIR),%{_libdir}/%{name},' hk_classes/Makefile.am
 # supplied libtool is broken (C++)
 %{__libtoolize}
 %{__aclocal}
