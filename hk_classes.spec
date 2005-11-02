@@ -28,6 +28,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	postgresql-backend-devel >= 7.1
 BuildRequires:	postgresql-devel >= 7.1
 BuildRequires:	rpm-pythonprov
+BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	unixODBC-devel
