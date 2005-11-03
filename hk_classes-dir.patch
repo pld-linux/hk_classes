@@ -160,7 +160,19 @@ diff -Nur b.hk_classes-0.8/hk_classes/hk_drivermanager.h n.hk_classes-0.8/hk_cla
  libhk_classes_la_LIBADD =$(LIBPYTHON)  $(PYTHONLIB)
  
 -libhk_classes_la_CPPFLAGS= -DHKCLASSES=\"$(HK_CLASSESDIR)\"
-+libhk_classes_la_CPPFLAGS= -DHKCLASSES=\"$(HK_CLASSESDIR)\" -DHK_DRIVERSDIR=\"@HK_DRIVERSDIR@\"
++ 
  
  
  libhk_classes_la_SOURCES= \
+--- b.hk_classes-0.8/acinclude.m4	2005-10-31 21:41:43.000000000 +0100
++++ n.hk_classes-0.8/acinclude.m4	2005-11-03 23:24:53.212345792 +0100
+@@ -52,7 +52,8 @@
+ AC_SUBST(HK_CLASSESINCDIR)
+ NODRIVER=true
+ POSSIBLE_DRIVERS="FIREBIRD,MYSQL,ODBC,PARADOX,POSTGRESQL,SQLITE2,SQLITE3,MDB,XBASE"
+-dnl AC_DEFINE_UNQUOTED(HKCLASSES, "$HK_CLASSESDIR",[PREPROCESSOR DEFINITION])
++AC_DEFINE_UNQUOTED(HKCLASSES, "$HK_CLASSESDIR", [HKCLASSES - directory for libhk_classes library])
++AC_DEFINE_UNQUOTED(HK_DRIVERSDIR, "$HK_DRIVERSDIR", [HK_DRIVERSDIR - database drivers' directory])
+ AC_MSG_RESULT(OK)
+ ])
+ 
