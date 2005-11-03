@@ -135,7 +135,7 @@ Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description driver-paradox
-xbase driver for hk_classes.
+paradox driver for hk_classes.
 
 %description driver-paradox -l pl
 Sterownik paradox dla hk_classes.
