@@ -83,3 +83,21 @@
  INCLUDES= -I../hk_classes -I@XBASEINCDIR@ 
  
  AM_CPPFLAGS=
+diff -Nur b.hk_classes-0.8/hk_paradoxclasses/Makefile.am n.hk_classes-0.8/hk_paradoxclasses/Makefile.am
+--- b.hk_classes-0.8/hk_paradoxclasses/Makefile.am	2005-05-05 15:56:52.000000000 +0200
++++ n.hk_classes-0.8/hk_paradoxclasses/Makefile.am	2005-11-03 18:39:22.632717584 +0100
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@PARADOXINCDIR@
+ 
+ AM_CPPFLAGS=
+diff -Nur b.hk_classes-0.8/hk_mdbclasses/Makefile.am n.hk_classes-0.8/hk_mdbclasses/Makefile.am
+--- b.hk_classes-0.8/hk_mdbclasses/Makefile.am	2005-06-25 10:39:15.000000000 +0200
++++ n.hk_classes-0.8/hk_mdbclasses/Makefile.am	2005-11-03 18:39:22.594723360 +0100
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@MDBINCDIR@
+ 
+ AM_CPPFLAGS=$(GLIB_CFLAGS)
