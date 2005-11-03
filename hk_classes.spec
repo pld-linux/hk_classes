@@ -2,13 +2,22 @@
 # TODO: patch3 should be rewritten to search for .pyc and .py not only .pyc and sent back
 #
 # Conditional build:
+%bcond_without	firebird
+%bcond_with	mdb
+%bcond_without	mysql
+%bcond_without	odbc	
+%bcond_without	pgsql
+%bcond_without	paradox
+%bcond_without	sqlite2
+%bcond_without	sqlite3
+%bcond_without	xbase
 %bcond_without	static_libs # don't build static library
 #
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
 Version:	0.8
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.gz
@@ -17,23 +26,25 @@ Patch0:		%{name}-dir.patch
 Patch1:		%{name}-link.patch
 Patch2:		%{name}-iconv-in-libc.patch
 Patch3:		%{name}-PLD-search-for-pyc-and-in-usr-share.patch
+Patch4:		%{name}-mdbtools_checking.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.7.6
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
-BuildRequires:	Firebird-devel
-BuildRequires:	mysql-devel
 BuildRequires:	pkgconfig
-BuildRequires:	postgresql-backend-devel >= 7.1
-BuildRequires:	postgresql-devel >= 7.1
 BuildRequires:	rpm-pythonprov
 BuildRequires:	sed >= 4.0
-BuildRequires:	sqlite-devel
-BuildRequires:	sqlite3-devel
-BuildRequires:	unixODBC-devel
-BuildRequires:	python-devel
-BuildRequires:	xbsql-devel
+%{?with_firebird:BuildRequires:	Firebird-devel}
+%{?with_mdb:BuildRequires:	mdbtools-devel >= 0.6}
+%{?with_mysql:BuildRequires:	mysql-devel}
+%{?with_pgsql:BuildRequires:	postgresql-backend-devel >= 7.1}
+%{?with_pgsql:BuildRequires:	postgresql-devel >= 7.1}
+%{?with_paradox:BuildRequires:	pxlib-devel}
+%{?with_sqlite2:BuildRequires:	sqlite-devel}
+%{?with_sqlite3:BuildRequires:	sqlite3-devel}
+%{?with_odbc:BuildRequires:	unixODBC-devel}
+%{?with_xbase:BuildRequires:	xbsql-devel}
 Conflicts:      knoda < 0.7.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -153,6 +164,30 @@ xbase driver for hk_classes.
 %description driver-xbase -l pl
 Sterownik xbase dla hk_classes.
 
+%package driver-mdb
+Summary:	mdb driver for hk_classes
+Summary(pl):	Sterownik mdb dla hk_classes
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description driver-mdb
+mdb driver for hk_classes.
+
+%description driver-mdb -l pl
+Sterownik mdb dla hk_classes.
+
+%package driver-paradox
+Summary:	paradox driver for hk_classes
+Summary(pl):	Sterownik paradox dla hk_classes
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description driver-paradox
+xbase driver for hk_classes.
+
+%description driver-paradox -l pl
+Sterownik paradox dla hk_classes.
+
 %package -n python-%{name}
 Summary:        Python interface to %{name}
 Summary(pl):    Interfejs do %{name} dla jezyka Python
@@ -195,9 +230,10 @@ Dokumentacja API dla hk_classes.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%{__sed} -i 's,\$(HK_CLASSESDIR),%{_libdir}/%{name},' hk_classes/Makefile.am
 
 %build
-%{__sed} -i 's,\$(HK_CLASSESDIR),%{_libdir}/%{name},' hk_classes/Makefile.am
 # supplied libtool is broken (C++)
 %{__libtoolize}
 %{__aclocal}
@@ -209,6 +245,15 @@ Dokumentacja API dla hk_classes.
 	--with-hk_classes-dir=%{_libdir} \
 	--with-hk_classes-incdir=%{_includedir}/%{name} \
 	--with-hk_classes-drvdir=%{_libdir}/%{name}/drivers \
+	--with%{!?with_firebird:out}-firebird \
+	--with%{!?with_mdb:out}-mdb \
+	--with%{!?with_mysql:out}-mysql \
+	--with%{!?with_odbc:out}-odbc \
+	--with%{!?with_paradox:out}-paradox \
+	--with%{!?with_pgsql:out}-postgres \
+	--with%{!?with_sqlite2:out}-sqlite \
+	--with%{!?with_sqlite3:out}-sqlite3 \
+	--with%{!?with_xbase:out}-xbase \
 	%{?with_static_libs:--enable-static=yes}
 %{__make}
 
@@ -250,33 +295,59 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.a
 %endif
 
+%if %{with firebird}
 %files driver-firebird
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_firebirddriver.so*
+%endif
 
+%if %{with mysql}
 %files driver-mysql
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_mysqldriver.so*
+%endif
 
+%if %{with odbc}
 %files driver-odbc
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_odbcdriver.so*
+%endif
 
+%if %{with pgsql}
 %files driver-postgresql
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_postgresdriver.so*
+%endif
 
+%if %{with sqlite2}
 %files driver-sqlite2
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_sqlite2driver.so*
+%endif
 
+%if %{with sqlite3}
 %files driver-sqlite3
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_sqlite3driver.so*
+%endif
 
+%if %{with mdb}
+%files driver-mdb
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_mdbdriver.so*
+%endif
+
+%if %{with paradox}
+%files driver-paradox
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_paradoxdriver.so*
+%endif
+
+%if %{with xbase}
 %files driver-xbase
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_xbasedriver.so*
+%endif
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
