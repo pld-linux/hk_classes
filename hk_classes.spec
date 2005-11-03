@@ -38,12 +38,12 @@ BuildRequires:	sed >= 4.0
 %{?with_firebird:BuildRequires:	Firebird-devel}
 %{?with_mdb:BuildRequires:	mdbtools-devel >= 0.6}
 %{?with_mysql:BuildRequires:	mysql-devel}
+%{?with_odbc:BuildRequires:	unixODBC-devel}
 %{?with_pgsql:BuildRequires:	postgresql-backend-devel >= 7.1}
 %{?with_pgsql:BuildRequires:	postgresql-devel >= 7.1}
 %{?with_paradox:BuildRequires:	pxlib-devel}
 %{?with_sqlite2:BuildRequires:	sqlite-devel}
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
-%{?with_odbc:BuildRequires:	unixODBC-devel}
 %{?with_xbase:BuildRequires:	xbsql-devel}
 Conflicts:      knoda < 0.7.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -92,6 +92,18 @@ Firebird driver for hk_classes.
 %description driver-firebird -l pl
 Sterownik Firebird dla hk_classes.
 
+%package driver-mdb
+Summary:	mdb driver for hk_classes
+Summary(pl):	Sterownik mdb dla hk_classes
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description driver-mdb
+mdb driver for hk_classes.
+
+%description driver-mdb -l pl
+Sterownik mdb dla hk_classes.
+
 %package driver-mysql
 Summary:	MySQL driver for hk_classes
 Summary(pl):	Sterownik MySQL dla hk_classes
@@ -115,6 +127,18 @@ unixODBC driver for hk_classes.
 
 %description driver-odbc -l pl
 Sterownik unixODBC dla hk_classes.
+
+%package driver-paradox
+Summary:	paradox driver for hk_classes
+Summary(pl):	Sterownik paradox dla hk_classes
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description driver-paradox
+xbase driver for hk_classes.
+
+%description driver-paradox -l pl
+Sterownik paradox dla hk_classes.
 
 %package driver-postgresql
 Summary:	PostgreSQL driver for hk_classes
@@ -163,30 +187,6 @@ xbase driver for hk_classes.
 
 %description driver-xbase -l pl
 Sterownik xbase dla hk_classes.
-
-%package driver-mdb
-Summary:	mdb driver for hk_classes
-Summary(pl):	Sterownik mdb dla hk_classes
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description driver-mdb
-mdb driver for hk_classes.
-
-%description driver-mdb -l pl
-Sterownik mdb dla hk_classes.
-
-%package driver-paradox
-Summary:	paradox driver for hk_classes
-Summary(pl):	Sterownik paradox dla hk_classes
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description driver-paradox
-xbase driver for hk_classes.
-
-%description driver-paradox -l pl
-Sterownik paradox dla hk_classes.
 
 %package -n python-%{name}
 Summary:        Python interface to %{name}
@@ -301,6 +301,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_firebirddriver.so*
 %endif
 
+%if %{with mdb}
+%files driver-mdb
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_mdbdriver.so*
+%endif
+
 %if %{with mysql}
 %files driver-mysql
 %defattr(644,root,root,755)
@@ -311,6 +317,12 @@ rm -rf $RPM_BUILD_ROOT
 %files driver-odbc
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_odbcdriver.so*
+%endif
+
+%if %{with paradox}
+%files driver-paradox
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_paradoxdriver.so*
 %endif
 
 %if %{with pgsql}
@@ -329,18 +341,6 @@ rm -rf $RPM_BUILD_ROOT
 %files driver-sqlite3
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_sqlite3driver.so*
-%endif
-
-%if %{with mdb}
-%files driver-mdb
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_mdbdriver.so*
-%endif
-
-%if %{with paradox}
-%files driver-paradox
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_paradoxdriver.so*
 %endif
 
 %if %{with xbase}
