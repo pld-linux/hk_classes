@@ -1,3 +1,5 @@
+sed -i 's%libdir=@HK_CLASSESDIR@/drivers%libdir=@HK_DRIVERSDIR@%'
+
 --- hk_classes-0.5.5/acinclude.m4.orig	Sun Aug 18 16:35:37 2002
 +++ hk_classes-0.5.5/acinclude.m4	Thu Nov 21 11:47:35 2002
 @@ -29,6 +29,15 @@
@@ -75,3 +77,102 @@
  INCLUDES= -I../hk_classes -I@FIREBIRDINCDIR@
  
  AM_CPPFLAGS=
+diff -Nur b.hk_classes-0.8/hk_mdbclasses/Makefile.am n.hk_classes-0.8/hk_mdbclasses/Makefile.am
+--- b.hk_classes-0.8/hk_mdbclasses/Makefile.am	2005-06-25 10:39:15.000000000 +0200
++++ n.hk_classes-0.8/hk_mdbclasses/Makefile.am	2005-11-03 13:39:22.594723360 +0100
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@MDBINCDIR@
+ 
+ AM_CPPFLAGS=$(GLIB_CFLAGS)
+diff -Nur b.hk_classes-0.8/hk_paradoxclasses/Makefile.am n.hk_classes-0.8/hk_paradoxclasses/Makefile.am
+--- b.hk_classes-0.8/hk_paradoxclasses/Makefile.am	2005-05-05 15:56:52.000000000 +0200
++++ n.hk_classes-0.8/hk_paradoxclasses/Makefile.am	2005-11-03 13:39:22.632717584 +0100
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@PARADOXINCDIR@
+ 
+ AM_CPPFLAGS=
+diff -Nur b.hk_classes-0.8/hk_xbaseclasses/Makefile.am n.hk_classes-0.8/hk_xbaseclasses/Makefile.am
+--- b.hk_classes-0.8/hk_xbaseclasses/Makefile.am	2005-04-10 11:55:26.000000000 +0200
++++ n.hk_classes-0.8/hk_xbaseclasses/Makefile.am	2005-11-03 13:39:22.700707248 +0100
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@XBASEINCDIR@ 
+ 
+ AM_CPPFLAGS=
+diff -Nur b.hk_classes-0.8/hk_classes/hk_drivermanager.cpp n.hk_classes-0.8/hk_classes/hk_drivermanager.cpp
+--- b.hk_classes-0.8/hk_classes/hk_drivermanager.cpp	2005-09-17 21:07:01.000000000 +0200
++++ n.hk_classes-0.8/hk_classes/hk_drivermanager.cpp	2005-11-03 18:25:30.665093872 +0100
+@@ -60,7 +60,7 @@
+ };
+ 
+ requestdialogtype* hk_drivermanager::p_driverselectdialog=NULL;
+-hk_string hk_drivermanager::p_hk_classespath=(hk_string)HKCLASSES+"/drivers";
++hk_string hk_drivermanager::p_hk_classespath=(hk_string)HK_DRIVERSDIR;
+ vector<hk_string> hk_drivermanager::p_driverlist;
+ 
+ typedef hk_connection*  connectiontype(hk_drivermanager* );
+@@ -83,8 +83,7 @@
+ {
+     p_private = new hk_drivermanagerprivate;
+     hk_report::setup_reportbasics();
+-    p_hk_classespath=HKCLASSES;
+-    p_hk_classespath=p_hk_classespath+"/drivers";
++    p_hk_classespath=HK_DRIVERSDIR;
+     scan_directory();
+     char* h= getenv("HOME");
+     hk_string classespath=(h==NULL?"/tmp":h);
+@@ -449,7 +448,7 @@
+ //the following is a hack for LFS
+             if (b.find("/usr/local/hk_classes")<b.size())
+             {
+-                b=HKCLASSES;b+="/drivers";
++                b=HK_DRIVERSDIR;
+ 
+                 set_path(b);
+                 show_warningmessage("Due to a new directory hierarchy, your preferences have been changed");
+diff -Nur b.hk_classes-0.8/hk_classes/hk_drivermanager.h n.hk_classes-0.8/hk_classes/hk_drivermanager.h
+--- b.hk_classes-0.8/hk_classes/hk_drivermanager.h	2005-06-22 20:12:09.000000000 +0200
++++ n.hk_classes-0.8/hk_classes/hk_drivermanager.h	2005-11-03 18:16:15.266527288 +0100
+@@ -17,6 +17,14 @@
+ #include "hk_url.h"
+ #include "hk_definitions.h"
+ #include "hk_string.h"
++
++#ifndef HK_DRIVERSDIR
++#ifndef HKCLASSES
++#define HKCLASSES "/usr/local/lib/hk_classes"
++#endif
++#define HK_DRIVERSDIR HKCLASSES "/driver"
++#endif
++
+ using namespace std;
+ 
+ class hk_connection;
+--- b.hk_classes-0.8/hk_classes/Makefile.am	2005-08-24 14:17:01.000000000 +0200
++++ n.hk_classes-0.8/hk_classes/Makefile.am	2005-11-03 19:45:52.286247208 +0100
+@@ -25,7 +25,7 @@
+ 
+ libhk_classes_la_LIBADD =$(LIBPYTHON)  $(PYTHONLIB)
+ 
+-libhk_classes_la_CPPFLAGS= -DHKCLASSES=\"$(HK_CLASSESDIR)\"
++ 
+ 
+ 
+ libhk_classes_la_SOURCES= \
+--- b.hk_classes-0.8/acinclude.m4	2005-10-31 21:41:43.000000000 +0100
++++ n.hk_classes-0.8/acinclude.m4	2005-11-03 23:24:53.212345792 +0100
+@@ -52,7 +52,8 @@
+ AC_SUBST(HK_CLASSESINCDIR)
+ NODRIVER=true
+ POSSIBLE_DRIVERS="FIREBIRD,MYSQL,ODBC,PARADOX,POSTGRESQL,SQLITE2,SQLITE3,MDB,XBASE"
+-dnl AC_DEFINE_UNQUOTED(HKCLASSES, "$HK_CLASSESDIR",[PREPROCESSOR DEFINITION])
++AC_DEFINE_UNQUOTED(HKCLASSES, "$HK_CLASSESDIR", [HKCLASSES - directory for libhk_classes library])
++AC_DEFINE_UNQUOTED(HK_DRIVERSDIR, "$HK_DRIVERSDIR", [HK_DRIVERSDIR - database drivers' directory])
+ AC_MSG_RESULT(OK)
+ ])
+ 
