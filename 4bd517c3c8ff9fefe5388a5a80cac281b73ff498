@@ -1,0 +1,10 @@
+- added -mdbtools-checking.patch - fix for mdbtools detection
+- added paradox and mdb subpackages
+- added bconds for all database drivers
+- sorting BRs, %%packages, %%files
+- added more directory fixes to -dir.patch (Paradox and mdb drivers)
+- added support for HK_DRIVERSDIR (--with-hk_classes-drvdir) to code
+  (-dir.patch) - it fixes hk_drivermanager_path() issue, but it isn't
+  widely tested.
+- removed: sed -i 's,\$(HK_CLASSESDIR),%{_libdir}/%{name},' hk_classes/Makefile.am
+  I don't understand what's it for.
