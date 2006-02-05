@@ -13,23 +13,25 @@
 %bcond_without	xbase
 %bcond_without	static_libs # don't build static library
 #
+%define	_test	1
+#
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
-Version:	0.8
-Release:	0.3
+Version:	0.8.1
+Release:	0.test%{_test}.0.1
 License:	GPL
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.gz
-# Source0-md5:	c5e3d5542037309127eddf532c91895b
+Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}-test%{_test}.tar.gz
+# Source0-md5:	04ce773c2cd083dcce7cbc4e6a3ff3de
 Patch0:		%{name}-dir.patch
-Patch1:		%{name}-link.patch
-Patch2:		%{name}-iconv-in-libc.patch
-Patch3:		%{name}-PLD-search-for-pyc-and-in-usr-share.patch
-Patch4:		%{name}-mdbtools_checking.patch
+Patch1:		%{name}-iconv-in-libc.patch
+Patch2:		%{name}-PLD-search-for-pyc-and-in-usr-share.patch
+Patch3:		%{name}-mdbtools_checking.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.7.6
+BuildRequires:	fontconfig-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
 BuildRequires:	pkgconfig
@@ -226,12 +228,11 @@ API documentation for hk_classes.
 Dokumentacja API dla hk_classes.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-test%{_test}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
 # supplied libtool is broken (C++)
