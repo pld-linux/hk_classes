@@ -17,7 +17,7 @@ Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
 Version:	0.8
-Release:	1	
+Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.gz
@@ -28,24 +28,24 @@ Patch2:		%{name}-iconv-in-libc.patch
 Patch3:		%{name}-PLD-search-for-pyc-and-in-usr-share.patch
 Patch4:		%{name}-mdbtools_checking.patch
 URL:		http://hk-classes.sourceforge.net/
+%{?with_firebird:BuildRequires:	Firebird-devel}
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.7.6
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
-BuildRequires:	pkgconfig
-BuildRequires:	rpm-pythonprov
-BuildRequires:	python-devel
-%{?with_firebird:BuildRequires:	Firebird-devel}
 %{?with_mdb:BuildRequires:	mdbtools-devel >= 0.6}
 %{?with_mysql:BuildRequires:	mysql-devel}
+BuildRequires:	pkgconfig
 %{?with_pgsql:BuildRequires:	postgresql-backend-devel >= 7.1}
 %{?with_pgsql:BuildRequires:	postgresql-devel >= 7.1}
 %{?with_paradox:BuildRequires:	pxlib-devel}
+BuildRequires:	python-devel
+BuildRequires:	rpm-pythonprov
 %{?with_sqlite2:BuildRequires:	sqlite-devel}
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
 %{?with_odbc:BuildRequires:	unixODBC-devel}
 %{?with_xbase:BuildRequires:	xbsql-devel}
-Conflicts:      knoda < 0.7.2
+Conflicts:	knoda < 0.7.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -189,10 +189,10 @@ xbase driver for hk_classes.
 Sterownik xbase dla hk_classes.
 
 %package -n python-%{name}
-Summary:        Python interface to %{name}
-Summary(pl):    Interfejs do %{name} dla jezyka Python
-Group:          Development/Libraries
-Requires:       %{name} = %{version}-%{release}
+Summary:	Python interface to %{name}
+Summary(pl):	Interfejs do %{name} dla jezyka Python
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
 %pyrequires_eq python-libs
 
 %description -n python-%{name}
@@ -213,12 +213,12 @@ Command line tools for hk_classes.
 %description tools -l pl
 Narzêdzia dzia³aj±ce z linii poleceñ dla hk_classes.
 
-%package apidocs 
+%package apidocs
 Summary:	API documentation for hk_classes
 Summary(pl):	Dokumentacja API dla hk_classes
 Group:		Documentation
 
-%description apidocs 
+%description apidocs
 API documentation for hk_classes.
 
 %description apidocs -l pl
