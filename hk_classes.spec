@@ -13,7 +13,7 @@
 %bcond_without	xbase
 %bcond_without	static_libs # don't build static library
 #
-%define	_test	1
+%define	_test	2
 #
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
@@ -23,11 +23,10 @@ Release:	0.test%{_test}.0.1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}-test%{_test}.tar.gz
-# Source0-md5:	04ce773c2cd083dcce7cbc4e6a3ff3de
+# Source0-md5:	e80f3abe3661570b4f161c5e8cb52dbe
 Patch0:		%{name}-dir.patch
 Patch1:		%{name}-iconv-in-libc.patch
-Patch2:		%{name}-PLD-search-for-pyc-and-in-usr-share.patch
-Patch3:		%{name}-mdbtools_checking.patch
+Patch2:		%{name}-mdbtools_checking.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.7.6
@@ -232,7 +231,6 @@ Dokumentacja API dla hk_classes.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 # supplied libtool is broken (C++)
@@ -363,4 +361,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files apidocs
 %defattr(644,root,root,755)
-%doc apidocs/api apidocs/tutorial
+%doc apidocs/tutorial
