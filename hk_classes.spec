@@ -1,5 +1,6 @@
 # TODO:	- make python build *.pyo also and include it instead of *.py
 #	- patch3 should be rewritten to search for .pyc and .py not only .pyc and sent back
+#	- link against mdbtools library instead of using use boundled mdbtools sources
 #
 # Conditional build:
 %bcond_without	firebird
@@ -13,7 +14,7 @@
 %bcond_without	xbase
 %bcond_without	static_libs # don't build static library
 #
-%define	_test	2
+%define	_test	3
 #
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
@@ -23,10 +24,9 @@ Release:	0.test%{_test}.0.1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}-test%{_test}.tar.gz
-# Source0-md5:	e80f3abe3661570b4f161c5e8cb52dbe
+# Source0-md5:	fe4bd14582870d77ac3584f7f4320a0b
 Patch0:		%{name}-dir.patch
 Patch1:		%{name}-iconv-in-libc.patch
-Patch2:		%{name}-mdbtools_checking.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.7.6
@@ -230,7 +230,6 @@ Dokumentacja API dla hk_classes.
 %setup -q -n %{name}-%{version}-test%{_test}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 # supplied libtool is broken (C++)
