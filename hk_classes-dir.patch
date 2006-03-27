@@ -29,81 +29,6 @@ sed -i 's%libdir=@HK_CLASSESDIR@/drivers%libdir=@HK_DRIVERSDIR@%'
  AC_ARG_WITH(hk_classes-incdir,[  --with-hk_classes-incdir=PATH   Path for the hk_classes header files],:,:)
  
  AC_ARG_WITH(postgres-dir,[  --with-postgres-dir=PATH   Path to the postgres directory],:,:)
---- hk_classes-0.5.5/hk_mysqlclasses/Makefile.am.orig	Wed Sep  4 19:11:59 2002
-+++ hk_classes-0.5.5/hk_mysqlclasses/Makefile.am	Thu Nov 21 12:44:43 2002
-@@ -1,4 +1,4 @@
--libdir=@HK_CLASSESDIR@/drivers
-+libdir=@HK_DRIVERSDIR@
- INCLUDES= -I../hk_classes -I@MYSQLINCDIR@
- AM_CXXFLAGS= -Wall
- 
---- hk_classes-0.5.5/hk_postgresclasses/Makefile.am.orig	Tue Aug 13 19:58:33 2002
-+++ hk_classes-0.5.5/hk_postgresclasses/Makefile.am	Thu Nov 21 12:44:58 2002
-@@ -1,4 +1,4 @@
--libdir=@HK_CLASSESDIR@/drivers
-+libdir=@HK_DRIVERSDIR@
- INCLUDES=   -I../hk_classes -I@POSTGRESINCDIR@
- 
- libhk_postgresdriver_la_LDFLAGS = -version-info 0:0:0 -lpq  -L../hk_classes -L@POSTGRESLIBDIR@
---- hk_classes-0.5.5/hk_odbcclasses/Makefile.am.orig	Mon Nov  4 19:41:17 2002
-+++ hk_classes-0.5.5/hk_odbcclasses/Makefile.am	Tue Dec  3 17:13:54 2002
-@@ -1,4 +1,4 @@
--libdir=@HK_CLASSESDIR@/drivers
-+libdir=@HK_DRIVERSDIR@
- INCLUDES= -I../hk_classes -I@ODBCINCDIR@ 
- AM_CXXFLAGS= -Wall
- 
---- hk_classes-0.7.2/hk_sqliteclasses/Makefile.am.orig	2005-02-18 08:47:12.000000000 +0100
-+++ hk_classes-0.7.2/hk_sqliteclasses/Makefile.am	2005-02-18 08:49:37.000000000 +0100
-@@ -1,4 +1,4 @@
--libdir=@HK_CLASSESDIR@/drivers
-+libdir=@HK_DRIVERSDIR@
- INCLUDES= -I../hk_classes -I@SQLITEINCDIR@
- 
- AM_CXXFLAGS= -Wall
---- hk_classes-0.7.2/hk_sqlite3classes/Makefile.am.orig	2005-02-18 08:49:58.000000000 +0100
-+++ hk_classes-0.7.2/hk_sqlite3classes/Makefile.am	2005-02-18 08:50:08.000000000 +0100
-@@ -1,4 +1,4 @@
--libdir=@HK_CLASSESDIR@/drivers
-+libdir=@HK_DRIVERSDIR@
- INCLUDES= -I../hk_classes -I@SQLITE3INCDIR@
- 
- AM_CXXFLAGS= -Wall
---- hk_classes-0.7.4/hk_firebirdclasses/Makefile.am~	2005-07-09 22:06:23.154547992 +0200
-+++ hk_classes-0.7.4/hk_firebirdclasses/Makefile.am	2005-07-09 22:05:32.071313824 +0200
-@@ -1,4 +1,4 @@
--libdir=@HK_CLASSESDIR@/drivers
-+libdir=@HK_DRIVERSDIR@
- INCLUDES= -I../hk_classes -I@FIREBIRDINCDIR@
- 
- AM_CPPFLAGS=
-diff -Nur b.hk_classes-0.8/hk_mdbclasses/Makefile.am n.hk_classes-0.8/hk_mdbclasses/Makefile.am
---- b.hk_classes-0.8/hk_mdbclasses/Makefile.am	2005-06-25 10:39:15.000000000 +0200
-+++ n.hk_classes-0.8/hk_mdbclasses/Makefile.am	2005-11-03 13:39:22.594723360 +0100
-@@ -1,4 +1,4 @@
--libdir=@HK_CLASSESDIR@/drivers
-+libdir=@HK_DRIVERSDIR@
- INCLUDES= -I../hk_classes -I@MDBINCDIR@
- 
- AM_CPPFLAGS=$(GLIB_CFLAGS)
-diff -Nur b.hk_classes-0.8/hk_paradoxclasses/Makefile.am n.hk_classes-0.8/hk_paradoxclasses/Makefile.am
---- b.hk_classes-0.8/hk_paradoxclasses/Makefile.am	2005-05-05 15:56:52.000000000 +0200
-+++ n.hk_classes-0.8/hk_paradoxclasses/Makefile.am	2005-11-03 13:39:22.632717584 +0100
-@@ -1,4 +1,4 @@
--libdir=@HK_CLASSESDIR@/drivers
-+libdir=@HK_DRIVERSDIR@
- INCLUDES= -I../hk_classes -I@PARADOXINCDIR@
- 
- AM_CPPFLAGS=
-diff -Nur b.hk_classes-0.8/hk_xbaseclasses/Makefile.am n.hk_classes-0.8/hk_xbaseclasses/Makefile.am
---- b.hk_classes-0.8/hk_xbaseclasses/Makefile.am	2005-04-10 11:55:26.000000000 +0200
-+++ n.hk_classes-0.8/hk_xbaseclasses/Makefile.am	2005-11-03 13:39:22.700707248 +0100
-@@ -1,4 +1,4 @@
--libdir=@HK_CLASSESDIR@/drivers
-+libdir=@HK_DRIVERSDIR@
- INCLUDES= -I../hk_classes -I@XBASEINCDIR@ 
- 
- AM_CPPFLAGS=
 diff -Nur b.hk_classes-0.8/hk_classes/hk_drivermanager.cpp n.hk_classes-0.8/hk_classes/hk_drivermanager.cpp
 --- b.hk_classes-0.8/hk_classes/hk_drivermanager.cpp	2005-09-17 21:07:01.000000000 +0200
 +++ n.hk_classes-0.8/hk_classes/hk_drivermanager.cpp	2005-11-03 18:25:30.665093872 +0100
@@ -153,17 +78,6 @@ diff -Nur b.hk_classes-0.8/hk_classes/hk_drivermanager.h n.hk_classes-0.8/hk_cla
  using namespace std;
  
  class hk_connection;
---- b.hk_classes-0.8/hk_classes/Makefile.am	2005-08-24 14:17:01.000000000 +0200
-+++ n.hk_classes-0.8/hk_classes/Makefile.am	2005-11-03 19:45:52.286247208 +0100
-@@ -25,7 +25,7 @@
- 
- libhk_classes_la_LIBADD =$(LIBPYTHON)  $(PYTHONLIB)
- 
--libhk_classes_la_CPPFLAGS= -DHKCLASSES=\"$(HK_CLASSESDIR)\"
-+ 
- 
- 
- libhk_classes_la_SOURCES= \
 --- b.hk_classes-0.8/acinclude.m4	2005-10-31 21:41:43.000000000 +0100
 +++ n.hk_classes-0.8/acinclude.m4	2005-11-03 23:24:53.212345792 +0100
 @@ -52,7 +52,8 @@
@@ -176,3 +90,84 @@ diff -Nur b.hk_classes-0.8/hk_classes/hk_drivermanager.h n.hk_classes-0.8/hk_cla
  AC_MSG_RESULT(OK)
  ])
  
+diff -Nur b.hk_classes-0.8.1-test3/hk_firebirdclasses/Makefile.am n.hk_classes-0.8.1-test3/hk_firebirdclasses/Makefile.am
+--- b.hk_classes-0.8.1-test3/hk_firebirdclasses/Makefile.am	2005-11-27 09:10:15.000000000 +0100
++++ n.hk_classes-0.8.1-test3/hk_firebirdclasses/Makefile.am	2006-03-27 11:46:20.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@FIREBIRDINCDIR@
+ 
+ AM_CPPFLAGS=
+diff -Nur b.hk_classes-0.8.1-test3/hk_mdbclasses/Makefile.am n.hk_classes-0.8.1-test3/hk_mdbclasses/Makefile.am
+--- b.hk_classes-0.8.1-test3/hk_mdbclasses/Makefile.am	2006-03-18 19:15:20.000000000 +0100
++++ n.hk_classes-0.8.1-test3/hk_mdbclasses/Makefile.am	2006-03-27 11:46:20.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I ./mdbtools 
+ 
+ AM_CPPFLAGS=$(GLIB_CFLAGS)
+diff -Nur b.hk_classes-0.8.1-test3/hk_mysqlclasses/Makefile.am n.hk_classes-0.8.1-test3/hk_mysqlclasses/Makefile.am
+--- b.hk_classes-0.8.1-test3/hk_mysqlclasses/Makefile.am	2005-11-27 09:10:15.000000000 +0100
++++ n.hk_classes-0.8.1-test3/hk_mysqlclasses/Makefile.am	2006-03-27 11:46:20.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@MYSQLINCDIR@
+ 
+ AM_CXXFLAGS= -Wall
+diff -Nur b.hk_classes-0.8.1-test3/hk_odbcclasses/Makefile.am n.hk_classes-0.8.1-test3/hk_odbcclasses/Makefile.am
+--- b.hk_classes-0.8.1-test3/hk_odbcclasses/Makefile.am	2005-11-27 09:10:16.000000000 +0100
++++ n.hk_classes-0.8.1-test3/hk_odbcclasses/Makefile.am	2006-03-27 11:46:20.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@ODBCINCDIR@ 
+ AM_CXXFLAGS= -Wall
+ 
+diff -Nur b.hk_classes-0.8.1-test3/hk_paradoxclasses/Makefile.am n.hk_classes-0.8.1-test3/hk_paradoxclasses/Makefile.am
+--- b.hk_classes-0.8.1-test3/hk_paradoxclasses/Makefile.am	2005-11-27 09:10:16.000000000 +0100
++++ n.hk_classes-0.8.1-test3/hk_paradoxclasses/Makefile.am	2006-03-27 11:46:20.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@PARADOXINCDIR@
+ 
+ AM_CPPFLAGS=
+diff -Nur b.hk_classes-0.8.1-test3/hk_postgresclasses/Makefile.am n.hk_classes-0.8.1-test3/hk_postgresclasses/Makefile.am
+--- b.hk_classes-0.8.1-test3/hk_postgresclasses/Makefile.am	2005-11-27 09:10:16.000000000 +0100
++++ n.hk_classes-0.8.1-test3/hk_postgresclasses/Makefile.am	2006-03-27 11:46:20.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES=   -I../hk_classes -I@POSTGRESINCDIR@
+ 
+ 
+diff -Nur b.hk_classes-0.8.1-test3/hk_sqlite3classes/Makefile.am n.hk_classes-0.8.1-test3/hk_sqlite3classes/Makefile.am
+--- b.hk_classes-0.8.1-test3/hk_sqlite3classes/Makefile.am	2006-03-19 10:36:29.000000000 +0100
++++ n.hk_classes-0.8.1-test3/hk_sqlite3classes/Makefile.am	2006-03-27 11:46:20.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I ./sqlite 
+ 
+ AM_CXXFLAGS= -Wall -DNO_TCL=1
+diff -Nur b.hk_classes-0.8.1-test3/hk_sqliteclasses/Makefile.am n.hk_classes-0.8.1-test3/hk_sqliteclasses/Makefile.am
+--- b.hk_classes-0.8.1-test3/hk_sqliteclasses/Makefile.am	2006-03-20 19:55:20.000000000 +0100
++++ n.hk_classes-0.8.1-test3/hk_sqliteclasses/Makefile.am	2006-03-27 11:46:20.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I./sqlite
+ 
+ AM_CXXFLAGS= -Wall -DNO_TCL=1
+diff -Nur b.hk_classes-0.8.1-test3/hk_xbaseclasses/Makefile.am n.hk_classes-0.8.1-test3/hk_xbaseclasses/Makefile.am
+--- b.hk_classes-0.8.1-test3/hk_xbaseclasses/Makefile.am	2005-11-27 09:10:16.000000000 +0100
++++ n.hk_classes-0.8.1-test3/hk_xbaseclasses/Makefile.am	2006-03-27 11:46:20.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@XBASEINCDIR@ 
+ 
+ AM_CPPFLAGS=
