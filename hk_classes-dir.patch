@@ -125,16 +125,15 @@ diff -Nur b.hk_classes-0.8.1-test3/hk_odbcclasses/Makefile.am n.hk_classes-0.8.1
 +libdir=@HK_DRIVERSDIR@
  INCLUDES= -I../hk_classes -I@ODBCINCDIR@ 
  AM_CXXFLAGS= -Wall
- 
-diff -Nur b.hk_classes-0.8.1-test3/hk_paradoxclasses/Makefile.am n.hk_classes-0.8.1-test3/hk_paradoxclasses/Makefile.am
---- b.hk_classes-0.8.1-test3/hk_paradoxclasses/Makefile.am	2005-11-27 09:10:16.000000000 +0100
-+++ n.hk_classes-0.8.1-test3/hk_paradoxclasses/Makefile.am	2006-03-27 11:46:20.000000000 +0200
+
+--- hk_classes-0.8.1/hk_paradoxclasses/Makefile.am.bak  2006-04-13 20:02:07.000000000 +0200
++++ hk_classes-0.8.1/hk_paradoxclasses/Makefile.am      2006-04-22 19:07:04.000000000 +0200
 @@ -1,4 +1,4 @@
 -libdir=@HK_CLASSESDIR@/drivers
 +libdir=@HK_DRIVERSDIR@
- INCLUDES= -I../hk_classes -I@PARADOXINCDIR@
- 
- AM_CPPFLAGS=
+ INCLUDES= -I../hk_classes -I./pxlib
+
+ AM_CPPFLAGS= 
 diff -Nur b.hk_classes-0.8.1-test3/hk_postgresclasses/Makefile.am n.hk_classes-0.8.1-test3/hk_postgresclasses/Makefile.am
 --- b.hk_classes-0.8.1-test3/hk_postgresclasses/Makefile.am	2005-11-27 09:10:16.000000000 +0100
 +++ n.hk_classes-0.8.1-test3/hk_postgresclasses/Makefile.am	2006-03-27 11:46:20.000000000 +0200

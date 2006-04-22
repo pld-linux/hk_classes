@@ -1,10 +1,11 @@
 # TODO:	- make python build *.pyo also and include it instead of *.py
 #	- patch3 should be rewritten to search for .pyc and .py not only .pyc and sent back
 #	- link against mdbtools library instead of using use boundled mdbtools sources
+#	- link against paradox library instead of ...
 #
 # Conditional build:
 %bcond_without	firebird
-%bcond_with	mdb
+%bcond_without	mdb
 %bcond_without	mysql
 %bcond_without	odbc	
 %bcond_without	pgsql
@@ -14,17 +15,15 @@
 %bcond_without	xbase
 %bcond_without	static_libs # don't build static library
 #
-%define	_test	3
-#
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
 Version:	0.8.1
-Release:	0.test%{_test}.0.1
+Release:	0.1
 License:	GPL
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}-test%{_test}.tar.gz
-# Source0-md5:	fe4bd14582870d77ac3584f7f4320a0b
+Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.gz
+# Source0-md5:	17234b38b36dca09b4fb2d8a4752fc0a
 Patch0:		%{name}-dir.patch
 Patch1:		%{name}-iconv-in-libc.patch
 URL:		http://hk-classes.sourceforge.net/
@@ -38,11 +37,11 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	sed >= 4.0
 BuildRequires:	python-devel
 %{?with_firebird:BuildRequires:	Firebird-devel}
-%{?with_mdb:BuildRequires:	mdbtools-devel >= 0.6}
+#%%{?with_mdb:BuildRequires:	mdbtools-devel >= 0.6}
 %{?with_mysql:BuildRequires:	mysql-devel}
 %{?with_pgsql:BuildRequires:	postgresql-backend-devel >= 7.1}
 %{?with_pgsql:BuildRequires:	postgresql-devel >= 7.1}
-%{?with_paradox:BuildRequires:	pxlib-devel}
+#%%{?with_paradox:BuildRequires:	pxlib-devel}
 %{?with_sqlite2:BuildRequires:	sqlite-devel}
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
 %{?with_odbc:BuildRequires:	unixODBC-devel}
@@ -227,7 +226,7 @@ API documentation for hk_classes.
 Dokumentacja API dla hk_classes.
 
 %prep
-%setup -q -n %{name}-%{version}-test%{_test}
+%setup -q
 %patch0 -p1
 %patch1 -p1
 
