@@ -1,11 +1,9 @@
 # TODO:	- make python build *.pyo also and include it instead of *.py
 #	- patch3 should be rewritten to search for .pyc and .py not only .pyc and sent back
-#	- link against mdbtools library instead of using use boundled mdbtools sources
-#	- link against paradox library instead of ...
 #
 # Conditional build:
 %bcond_without	firebird
-%bcond_without	mdb
+%bcond_with	mdb
 %bcond_without	mysql
 %bcond_without	odbc	
 %bcond_without	pgsql
@@ -24,8 +22,7 @@ License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.gz
 # Source0-md5:	17234b38b36dca09b4fb2d8a4752fc0a
-Patch0:		%{name}-dir.patch
-Patch1:		%{name}-iconv-in-libc.patch
+Patch0:		%{name}.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.7.6
@@ -37,11 +34,11 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	sed >= 4.0
 BuildRequires:	python-devel
 %{?with_firebird:BuildRequires:	Firebird-devel}
-#%%{?with_mdb:BuildRequires:	mdbtools-devel >= 0.6}
+%{?with_mdb:BuildRequires:	mdbtools-devel >= 0.6}
 %{?with_mysql:BuildRequires:	mysql-devel}
 %{?with_pgsql:BuildRequires:	postgresql-backend-devel >= 7.1}
 %{?with_pgsql:BuildRequires:	postgresql-devel >= 7.1}
-#%%{?with_paradox:BuildRequires:	pxlib-devel}
+%{?with_paradox:BuildRequires:	pxlib-devel}
 %{?with_sqlite2:BuildRequires:	sqlite-devel}
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
 %{?with_odbc:BuildRequires:	unixODBC-devel}
@@ -228,7 +225,6 @@ Dokumentacja API dla hk_classes.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 # supplied libtool is broken (C++)
@@ -243,13 +239,13 @@ Dokumentacja API dla hk_classes.
 	--with-hk_classes-incdir=%{_includedir}/%{name} \
 	--with-hk_classes-drvdir=%{_libdir}/%{name}/drivers \
 	--with%{!?with_firebird:out}-firebird \
-	--with%{!?with_mdb:out}-mdb \
+	--with-mdb=%{?with_mdb:external}%{!?with_mdb:no} \
 	--with%{!?with_mysql:out}-mysql \
 	--with%{!?with_odbc:out}-odbc \
-	--with%{!?with_paradox:out}-paradox \
+	--with-paradox=%{?with_paradox:external}%{!?with_paradox:no} \
 	--with%{!?with_pgsql:out}-postgres \
 	--with%{!?with_sqlite2:out}-sqlite \
-	--with%{!?with_sqlite3:out}-sqlite3 \
+	--with-sqlite3=%{?with_sqlite3:external}%{!?with_sqlite3:no} \
 	--with%{!?with_xbase:out}-xbase \
 	%{?with_static_libs:--enable-static=yes}
 %{__make}
