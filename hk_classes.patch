@@ -1,0 +1,355 @@
+diff -Nur o.hk_classes-0.8.1/acinclude.m4 n.hk_classes-0.8.1/acinclude.m4
+--- o.hk_classes-0.8.1/acinclude.m4	2006-04-14 17:38:48.000000000 +0200
++++ n.hk_classes-0.8.1/acinclude.m4	2006-04-23 15:06:50.000000000 +0200
+@@ -34,6 +34,15 @@
+  HK_CLASSESDIR=$libdir/hk_classes
+  HK_CLASSESINCDIR=$includedir/hk_classes
+ fi
++if test "$with_hk_classes_dir" != ""; then
++HK_CLASSESDIR=$with_hk_classes_dir
++fi
++if test "$with_hk_classes_drvdir" != ""; then
++HK_DRIVERSDIR=$with_hk_classes_drvdir
++else
++HK_DRIVERSDIR=$HK_CLASSESDIR/drivers
++fi
++AC_SUBST(HK_DRIVERSDIR)
+ if test "$with_hk_classes_incdir" != ""; then
+ HK_CLASSESINCDIR=$with_hk_classes_incdir
+ fi
+@@ -43,7 +52,8 @@
+ AC_SUBST(HK_CLASSESINCDIR)
+ NODRIVER=true
+ POSSIBLE_DRIVERS="FIREBIRD,MYSQL,ODBC,PARADOX,POSTGRESQL,SQLITE2,SQLITE3,MDB,XBASE"
+-dnl AC_DEFINE_UNQUOTED(HKCLASSES, "$HK_CLASSESDIR",[PREPROCESSOR DEFINITION])
++AC_DEFINE_UNQUOTED(HKCLASSES, "$HK_CLASSESDIR", [HKCLASSES - directory for libhk_classes library])
++AC_DEFINE_UNQUOTED(HK_DRIVERSDIR, "$HK_DRIVERSDIR", [HK_DRIVERSDIR - database drivers' directory])
+ AC_MSG_RESULT(OK)
+ ])
+ 
+@@ -378,6 +388,7 @@
+   dnl accordingly.
+   dnl AC_LIB_LINKFLAGS_BODY([iconv])
+ 
++  AC_CHECK_FUNC(iconv, [ac_liconv="no"], [
+   AC_MSG_CHECKING([if libiconv is present])
+   ac_save_LIBS="$LIBS"
+   LIBS="$ac_save_LIBS -liconv"
+@@ -388,6 +399,7 @@
+     LIBS="$ac_save_LIBS"
+     ac_liconv="no")
+   AC_MSG_RESULT($ac_liconv)
++  ])
+   dnl Add $INCICONV to CPPFLAGS before performing the following checks,
+   dnl because if the user has installed libiconv and not disabled its use
+   dnl via --without-libiconv-prefix, he wants to use it. The first
+@@ -520,18 +532,32 @@
+ 
+ AC_DEFUN([HK_SQLITE3TEST],
+ [
++
+ AC_MSG_CHECKING([whether the SQLITE3 driver will be installed])
+-if test "$want_sqlite3" = "yes"; then
+-NODRIVER=false
+-DRIVERSDIR="$DRIVERSDIR hk_sqlite3classes"
+-AC_MSG_RESULT(yes)
++if test "$with_sqlite3" = "yes" -o "$with_sqlite3" = "external" ; then
++	NODRIVER=false
++	DRIVERSDIR="$DRIVERSDIR hk_sqlite3classes"
++	if test "$with_sqlite3" = "yes" ; then
++		SQLITE3_LIB=""
++		AC_SUBST(SQLITE3_LIB)
++		AM_CONDITIONAL(SQLITE3_BUILDIN, true)
++	elif test "$with_sqlite3" = "external" ; then
++		AC_CHECK_LIB(px, PX_new, SQLITE3_LIB="-lsqlite3",
++			AC_MSG_ERROR([SQLITE3 library not found.]))
++		AM_CONDITIONAL(SQLITE3_BUILDIN, false)
++		AC_SUBST(SQLITE3_LIB)
++	fi	
++	AC_MSG_RESULT($with_sqlite3)
+ else
+-AC_MSG_RESULT(no)
++	AC_MSG_RESULT(no)
+ fi
+ 
++])
++
++
++
+ 
+ 
+-])
+ 
+ 
+ 
+@@ -659,12 +685,22 @@
+ [
+ 
+ AC_MSG_CHECKING([whether the PARADOX (pxlib) driver will be installed])
+-if test "$want_paradox" = "yes"; then
+-NODRIVER=false
+-DRIVERSDIR="$DRIVERSDIR hk_paradoxclasses"
+-AC_MSG_RESULT(yes)
++if test "$with_paradox" = "yes" -o "$with_paradox" = "external" ; then
++	NODRIVER=false
++	DRIVERSDIR="$DRIVERSDIR hk_paradoxclasses"
++	if test "$with_paradox" = "yes" ; then
++		PARADOX_LIB=""
++		AC_SUBST(PARADOX_LIB)
++		AM_CONDITIONAL(PARADOX_BUILDIN, true)
++	elif test "$with_paradox" = "external" ; then
++		AC_CHECK_LIB(px, PX_new, PARADOX_LIB="-lpx",
++			AC_MSG_ERROR([PARADOX library not found.]))
++		AM_CONDITIONAL(PARADOX_BUILDIN, false)
++		AC_SUBST(PARADOX_LIB)
++	fi	
++	AC_MSG_RESULT($with_paradox)
+ else
+-AC_MSG_RESULT(no)
++	AC_MSG_RESULT(no)
+ fi
+ 
+ ])
+diff -Nur o.hk_classes-0.8.1/configure.in n.hk_classes-0.8.1/configure.in
+--- o.hk_classes-0.8.1/configure.in	2006-04-14 17:38:48.000000000 +0200
++++ n.hk_classes-0.8.1/configure.in	2006-04-23 15:06:50.000000000 +0200
+@@ -15,6 +15,8 @@
+ AC_ARG_WITH(mysql-dir,[  --with-mysql-dir=PATH   Path to the Mysql directory],:,:)
+ AC_ARG_WITH(mysql-incdir,[  --with-mysql-incdir=PATH   Path to the Mysql header files],:,:)
+ AC_ARG_WITH(mysql-libdir,[  --with-mysql-libdir=PATH   Path to the Mysql library],:,:)
++AC_ARG_WITH(hk_classes-dir,[  --with-hk_classes-dir=PATH   Path for the hk_classes library files],:,:)
++AC_ARG_WITH(hk_classes-drvdir,[  --with-hk_classes-drvdir=PATH   Path for the hk_classes driver files],:,:)
+ AC_ARG_WITH(hk_classes-incdir,[  --with-hk_classes-incdir=PATH   Path for the hk_classes header files],:,:)
+ 
+ AC_ARG_WITH(postgres, AC_HELP_STRING([--without-postgres],[disable postgres plugins]),[want_postgres=$withval], want_postgres=yes)
+@@ -32,10 +34,10 @@
+ AC_ARG_WITH(sqlite-incdir,[  --with-sqlite-incdir=PATH   Path to the sqlite2 header files],:,:)
+ AC_ARG_WITH(sqlite-libdir,[  --with-sqlite-libdir=PATH   Path to the sqlite2 library],:,:)
+ 
+-AC_ARG_WITH(sqlite3, AC_HELP_STRING([--without-sqlite3],[disable sqlite3 plugins]),[want_sqlite3=$withval], want_sqlite3=yes)
++AC_ARG_WITH(sqlite3, AC_HELP_STRING([--with-sqlite3=(yes)/external/no],[sqlite3 plugins]),, with_sqlite3=yes)
+ 
+ 
+-AC_ARG_WITH(mdb, AC_HELP_STRING([--without-mdb],[disable mdb (M$Access) plugins]),[want_mdb=$withval], want_mdb=yes)
++AC_ARG_WITH(mdb, AC_HELP_STRING([--with-mdb=(yes)/external/no],[mdb (M$Access) plugins]),, with_mdb=yes)
+ 
+ 
+ AC_ARG_WITH(xbase, AC_HELP_STRING([--without-xbase],[disable xbase plugins]),[want_xbase=$withval], want_xbase=yes)
+@@ -44,7 +46,7 @@
+ AC_ARG_WITH(xbase-libdir,[  --with-xbase-libdir=PATH   Path to the xbase library],:,:)
+ 
+ 
+-AC_ARG_WITH(paradox, AC_HELP_STRING([--without-paradox],[disable paradox plugins]),[want_paradox=$withval], want_paradox=yes)
++AC_ARG_WITH(paradox, AC_HELP_STRING([--with-paradox=(yes)/external/no],[paradox plugins]),, with_paradox=yes)
+ 
+ 
+ AC_ARG_WITH(fontconfig-incdir,[  --with-fontconfig-incdir=PATH   Path to the fontconfig header files],:,:)
+diff -Nur o.hk_classes-0.8.1/hk_classes/hk_drivermanager.cpp n.hk_classes-0.8.1/hk_classes/hk_drivermanager.cpp
+--- o.hk_classes-0.8.1/hk_classes/hk_drivermanager.cpp	2006-03-28 19:37:21.000000000 +0200
++++ n.hk_classes-0.8.1/hk_classes/hk_drivermanager.cpp	2006-04-23 15:06:51.000000000 +0200
+@@ -60,7 +60,7 @@
+ };
+ 
+ requestdialogtype* hk_drivermanager::p_driverselectdialog=NULL;
+-hk_string hk_drivermanager::p_hk_classespath=(hk_string)HKCLASSES+"/drivers";
++hk_string hk_drivermanager::p_hk_classespath=(hk_string)HK_DRIVERSDIR;
+ vector<hk_string> hk_drivermanager::p_driverlist;
+ 
+ typedef hk_connection*  connectiontype(hk_drivermanager* );
+@@ -83,8 +83,7 @@
+ {
+     p_private = new hk_drivermanagerprivate;
+     hk_report::setup_reportbasics();
+-    p_hk_classespath=HKCLASSES;
+-    p_hk_classespath=p_hk_classespath+"/drivers";
++    p_hk_classespath=HK_DRIVERSDIR;
+     scan_directory();
+     char* h= getenv("HOME");
+     hk_string classespath=(h==NULL?"/tmp":h);
+@@ -449,7 +448,7 @@
+ //the following is a hack for LFS
+             if (b.find("/usr/local/hk_classes")<b.size())
+             {
+-                b=HKCLASSES;b+="/drivers";
++                b=HK_DRIVERSDIR;
+ 
+                 set_path(b);
+                 show_warningmessage("Due to a new directory hierarchy, your preferences have been changed");
+diff -Nur o.hk_classes-0.8.1/hk_classes/hk_drivermanager.h n.hk_classes-0.8.1/hk_classes/hk_drivermanager.h
+--- o.hk_classes-0.8.1/hk_classes/hk_drivermanager.h	2005-06-22 20:12:09.000000000 +0200
++++ n.hk_classes-0.8.1/hk_classes/hk_drivermanager.h	2006-04-23 15:06:51.000000000 +0200
+@@ -17,6 +17,14 @@
+ #include "hk_url.h"
+ #include "hk_definitions.h"
+ #include "hk_string.h"
++
++#ifndef HK_DRIVERSDIR
++#ifndef HKCLASSES
++#define HKCLASSES "/usr/local/lib/hk_classes"
++#endif
++#define HK_DRIVERSDIR HKCLASSES "/driver"
++#endif
++
+ using namespace std;
+ 
+ class hk_connection;
+diff -Nur o.hk_classes-0.8.1/hk_firebirdclasses/Makefile.am n.hk_classes-0.8.1/hk_firebirdclasses/Makefile.am
+--- o.hk_classes-0.8.1/hk_firebirdclasses/Makefile.am	2006-04-13 20:02:06.000000000 +0200
++++ n.hk_classes-0.8.1/hk_firebirdclasses/Makefile.am	2006-04-23 15:06:50.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@FIREBIRDINCDIR@
+ 
+ AM_CPPFLAGS=-W -Wconversion -Wshadow -Wcast-qual -Wwrite-strings
+diff -Nur o.hk_classes-0.8.1/hk_mdbclasses/Makefile.am n.hk_classes-0.8.1/hk_mdbclasses/Makefile.am
+--- o.hk_classes-0.8.1/hk_mdbclasses/Makefile.am	2006-04-15 17:48:57.000000000 +0200
++++ n.hk_classes-0.8.1/hk_mdbclasses/Makefile.am	2006-04-23 15:06:50.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I ./mdbtools 
+ 
+ AM_CPPFLAGS=$(GLIB_CFLAGS) 
+diff -Nur o.hk_classes-0.8.1/hk_mysqlclasses/Makefile.am n.hk_classes-0.8.1/hk_mysqlclasses/Makefile.am
+--- o.hk_classes-0.8.1/hk_mysqlclasses/Makefile.am	2006-04-13 20:02:06.000000000 +0200
++++ n.hk_classes-0.8.1/hk_mysqlclasses/Makefile.am	2006-04-23 15:06:50.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@MYSQLINCDIR@
+ 
+ AM_CXXFLAGS= -Wall -W -Wconversion -Wshadow -Wcast-qual -Wwrite-strings
+diff -Nur o.hk_classes-0.8.1/hk_odbcclasses/Makefile.am n.hk_classes-0.8.1/hk_odbcclasses/Makefile.am
+--- o.hk_classes-0.8.1/hk_odbcclasses/Makefile.am	2006-04-13 20:02:06.000000000 +0200
++++ n.hk_classes-0.8.1/hk_odbcclasses/Makefile.am	2006-04-23 15:06:50.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@ODBCINCDIR@ 
+ AM_CXXFLAGS= -Wall -W -Wconversion -Wshadow -Wcast-qual -Wwrite-strings
+ 
+diff -Nur o.hk_classes-0.8.1/hk_paradoxclasses/Makefile.am n.hk_classes-0.8.1/hk_paradoxclasses/Makefile.am
+--- o.hk_classes-0.8.1/hk_paradoxclasses/Makefile.am	2006-04-13 20:02:07.000000000 +0200
++++ n.hk_classes-0.8.1/hk_paradoxclasses/Makefile.am	2006-04-23 15:06:50.000000000 +0200
+@@ -1,15 +1,20 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
++
++if PARADOX_BUILDIN
+ INCLUDES= -I../hk_classes -I./pxlib
++else
++INCLUDES= -I../hk_classes
++endif
+ 
+ AM_CPPFLAGS=
+ 
+ AM_CXXFLAGS= -Wall -W -Wconversion -Wshadow -Wcast-qual -Wwrite-strings
+ 
+-PXLIB_BUILD_DATE = 2006-02-28
++PARADOX_LIB_BUILD_DATE = 2006-02-28
+ 
+ 
+ libhk_paradoxdriver_la_LDFLAGS = -version-info 0:0:0 
+-libhk_paradoxdriver_la_LIBADD = -lm ../hk_classes/libhk_classes.la
++libhk_paradoxdriver_la_LIBADD = -lm @PARADOX_LIB@ ../hk_classes/libhk_classes.la
+ 
+ lib_LTLIBRARIES = 	libhk_paradoxdriver.la
+ 
+@@ -19,16 +24,19 @@
+ 		 pxlib/px_memory.h  pxlib/pxversion.h  pxlib/paradox-gsf.h  pxlib/paradox-mp.h  pxlib/px_encode.h \
+ 		 pxlib/px_head.h   pxlib/px_io.h      pxlib/px_misc.h    pxlib/sdncal.h
+ 
+-
+-
+ include_HEADERS =
+ 
++if PARADOX_BUILDIN
+ libhk_paradoxdriver_la_SOURCES= 	 hk_paradoxconnection.cpp hk_paradoxdatabase.cpp hk_paradoxdatasource.cpp \
+ 				 hk_paradoxcolumn.cpp hk_paradoxresultquery.cpp hk_paradoxtable.cpp hk_paradoxactionquery.cpp \
+ 				 pxlib/gregor.c   pxlib/px_crypt.c   pxlib/px_error.c  pxlib/px_io.c   \
+ 				 pxlib/px_memprof.c pxlib/paradox.c  pxlib/px_encode.c  pxlib/px_head.c  \
+ 				 pxlib/px_memory.c  pxlib/px_misc.c 
++else
++libhk_paradoxdriver_la_SOURCES= 	 hk_paradoxconnection.cpp hk_paradoxdatabase.cpp hk_paradoxdatasource.cpp \
++				 hk_paradoxcolumn.cpp hk_paradoxresultquery.cpp hk_paradoxtable.cpp hk_paradoxactionquery.cpp 
++endif
+ 
+-
++if PARADOX_BUILDIN
+ EXTRA_DIST =  pxlib/AUTHORS
+-
++endif
+diff -Nur o.hk_classes-0.8.1/hk_postgresclasses/Makefile.am n.hk_classes-0.8.1/hk_postgresclasses/Makefile.am
+--- o.hk_classes-0.8.1/hk_postgresclasses/Makefile.am	2006-04-13 20:02:07.000000000 +0200
++++ n.hk_classes-0.8.1/hk_postgresclasses/Makefile.am	2006-04-23 15:06:50.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES=   -I../hk_classes -I@POSTGRESINCDIR@
+ 
+ AM_CXXFLAGS= -Wall -W -Wconversion -Wshadow -Wcast-qual -Wwrite-strings
+diff -Nur o.hk_classes-0.8.1/hk_sqlite3classes/Makefile.am n.hk_classes-0.8.1/hk_sqlite3classes/Makefile.am
+--- o.hk_classes-0.8.1/hk_sqlite3classes/Makefile.am	2006-04-13 20:02:07.000000000 +0200
++++ n.hk_classes-0.8.1/hk_sqlite3classes/Makefile.am	2006-04-23 15:06:50.000000000 +0200
+@@ -1,11 +1,16 @@
+-libdir=@HK_CLASSESDIR@/drivers
+-INCLUDES= -I../hk_classes -I ./sqlite 
++libdir=@HK_DRIVERSDIR@
++
++if SQLITE3_BUILDIN
++INCLUDES= -I../hk_classes -I ./sqlite
++else
++INCLUDES= -I../hk_classes
++endif
+ 
+ AM_CXXFLAGS= -Wall -DNO_TCL=1 -W -Wconversion -Wshadow -Wcast-qual -Wwrite-strings
+ AM_CFLAGS= -DNO_TCL=1
+ 
+ libhk_sqlite3driver_la_LDFLAGS = -version-info 0:0:0 
+-libhk_sqlite3driver_la_LIBADD =  ../hk_classes/libhk_classes.la
++libhk_sqlite3driver_la_LIBADD =  @SQLITE3_LIB@ ../hk_classes/libhk_classes.la
+ 
+ lib_LTLIBRARIES = 	libhk_sqlite3driver.la
+ 
+@@ -16,10 +21,9 @@
+ 			sqlite/btree.h  sqlite/hash.h  sqlite/os_common.h  sqlite/os.h  sqlite/pager.h \
+ 			sqlite/sqliteInt.h  sqlite/vdbe.h  sqlite/vdbeInt.h
+ 
+-
+-
+-
+ include_HEADERS =
++
++if SQLITE3_BUILDIN
+ libhk_sqlite3driver_la_SOURCES= 	hk_sqlite3column.cpp hk_sqlite3connection.cpp hk_sqlite3database.cpp\
+ 				hk_sqlite3datasource.cpp hk_sqlite3actionquery.cpp hk_sqlite3resultquery.cpp\
+ 				hk_sqlite3table.cpp hk_sqlite3view.cpp \
+@@ -32,4 +36,8 @@
+ 				sqlite/attach.c   sqlite/build.c  sqlite/date.c      sqlite/func.c    sqlite/legacy.c \
+ 				sqlite/os_unix.c  sqlite/pragma.c  sqlite/random.c   sqlite/table.c   sqlite/trigger.c \
+ 				sqlite/util.c    sqlite/vdbeaux.c  sqlite/vdbemem.c sqlite/parse.c   sqlite/opcodes.c
+-
++else
++libhk_sqlite3driver_la_SOURCES= 	hk_sqlite3column.cpp hk_sqlite3connection.cpp hk_sqlite3database.cpp\
++				hk_sqlite3datasource.cpp hk_sqlite3actionquery.cpp hk_sqlite3resultquery.cpp\
++				hk_sqlite3table.cpp hk_sqlite3view.cpp
++endif
+diff -Nur o.hk_classes-0.8.1/hk_sqliteclasses/Makefile.am n.hk_classes-0.8.1/hk_sqliteclasses/Makefile.am
+--- o.hk_classes-0.8.1/hk_sqliteclasses/Makefile.am	2006-04-13 20:02:07.000000000 +0200
++++ n.hk_classes-0.8.1/hk_sqliteclasses/Makefile.am	2006-04-23 15:06:50.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I./sqlite
+ 
+ AM_CXXFLAGS= -Wall -DNO_TCL=1  -W -Wconversion -Wshadow -Wcast-qual -Wwrite-strings
+diff -Nur o.hk_classes-0.8.1/hk_xbaseclasses/Makefile.am n.hk_classes-0.8.1/hk_xbaseclasses/Makefile.am
+--- o.hk_classes-0.8.1/hk_xbaseclasses/Makefile.am	2006-04-13 20:02:07.000000000 +0200
++++ n.hk_classes-0.8.1/hk_xbaseclasses/Makefile.am	2006-04-23 15:06:50.000000000 +0200
+@@ -1,4 +1,4 @@
+-libdir=@HK_CLASSESDIR@/drivers
++libdir=@HK_DRIVERSDIR@
+ INCLUDES= -I../hk_classes -I@XBASEINCDIR@ 
+ 
+ AM_CPPFLAGS=
