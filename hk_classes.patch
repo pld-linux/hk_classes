@@ -1,6 +1,6 @@
 diff -Nur o.hk_classes-0.8.1/acinclude.m4 n.hk_classes-0.8.1/acinclude.m4
 --- o.hk_classes-0.8.1/acinclude.m4	2006-04-14 17:38:48.000000000 +0200
-+++ n.hk_classes-0.8.1/acinclude.m4	2006-04-23 19:54:14.000000000 +0200
++++ n.hk_classes-0.8.1/acinclude.m4	2006-04-24 21:41:18.000000000 +0200
 @@ -34,6 +34,15 @@
   HK_CLASSESDIR=$libdir/hk_classes
   HK_CLASSESINCDIR=$includedir/hk_classes
@@ -210,6 +210,41 @@ diff -Nur o.hk_classes-0.8.1/acinclude.m4 n.hk_classes-0.8.1/acinclude.m4
  fi
  
  ])
+@@ -680,18 +740,19 @@
+ if test "$want_firebird" = "yes"; then
+ AC_MSG_CHECKING([whether FIREBIRD is available])
+ if test "$with_firebird_dir" = ""; then
+-   FIREBIRDLIBDIR=/opt/firebird/lib
+-   FIREBIRDINCDIR=/opt/firebird/include
+-else FIREBIRDLIBDIR=$with_firebird_dir/lib
+-FIREBIRDINCDIR=$with_firebird_dir/include
++	FIREBIRDLIBDIR=/opt/firebird/lib
++	FIREBIRDINCDIR=/opt/firebird/include
++else 
++	FIREBIRDLIBDIR=$with_firebird_dir/lib
++	FIREBIRDINCDIR=$with_firebird_dir/include
+ fi
+ 
+ if test "x$with_firebird_incdir" != "x"; then
+- FIREBIRDINCDIR=$with_firebird_incdir
++	FIREBIRDINCDIR=$with_firebird_incdir
+ fi
+ 
+ if test "x$with_firebird_libdir" != "x"; then
+- FIREBIRDLIBDIR=$with_firebird_libdir
++	FIREBIRDLIBDIR=$with_firebird_libdir
+ fi
+ 
+ ac_save_LIBS="$LIBS"
+@@ -794,7 +855,7 @@
+ fi
+ 
+ if test "x$with_fontconfig_libdir" != "x"; then
+- FONTCONFIGLIBDIR=$with_fontconifg_libdir
++ FONTCONFIGLIBDIR=$with_fontconfig_libdir
+ fi
+ 
+ ac_save_LIBS="$LIBS"
 diff -Nur o.hk_classes-0.8.1/configure.in n.hk_classes-0.8.1/configure.in
 --- o.hk_classes-0.8.1/configure.in	2006-04-14 17:38:48.000000000 +0200
 +++ n.hk_classes-0.8.1/configure.in	2006-04-23 19:32:38.000000000 +0200
