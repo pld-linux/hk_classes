@@ -61,7 +61,7 @@ diff -Nur o.hk_classes-0.8.1/acinclude.m4 n.hk_classes-0.8.1/acinclude.m4
 +		AC_SUBST(SQLITE3_LIB)
 +		AM_CONDITIONAL(SQLITE3_BUILTIN, true)
 +	elif test "$with_sqlite3" = "external" ; then
-+		AC_CHECK_LIB(px, PX_new, SQLITE3_LIB="-lsqlite3",
++		AC_CHECK_LIB(sqlite3, sqlite3_value_text, SQLITE3_LIB="-lsqlite3",
 +			AC_MSG_ERROR([SQLITE3 library not found.]))
 +		AM_CONDITIONAL(SQLITE3_BUILTIN, false)
 +		AC_SUBST(SQLITE3_LIB)
