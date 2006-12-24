@@ -1,9 +1,11 @@
 # TODO:	- make python build *.pyo also and include it instead of *.py
 #	- patch3 should be rewritten to search for .pyc and .py not only .pyc and sent back
+# NOTE: - don't remove *.la - they are needed - see http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=400885
 #
 # Conditional build:
+%bcond_without	dbase
 %bcond_without	firebird
-%bcond_with	mdb
+%bcond_without	mdb
 %bcond_without	mysql
 %bcond_without	odbc	
 %bcond_without	pgsql
@@ -16,12 +18,12 @@
 Summary:	Non-visual routines for database frontend applications
 Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
 Name:		hk_classes
-Version:	0.8.1
+Version:	0.8.2
 Release:	0.1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.gz
-# Source0-md5:	17234b38b36dca09b4fb2d8a4752fc0a
+# Source0-md5:	dd11bb41cc7093c7bca80f923a058c8f
 Patch0:		%{name}.patch
 URL:		http://hk-classes.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
@@ -29,6 +31,7 @@ BuildRequires:	automake >= 1:1.7.6
 BuildRequires:	fontconfig-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.4d
+BuildRequires:	libxml2-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-pythonprov
 BuildRequires:	sed >= 4.0
@@ -77,6 +80,18 @@ Static hk_classes library.
 
 %description static -l pl
 Statyczna biblioteka hk_classes.
+
+%package driver-dbase
+Summary:	dbase driver for hk_classes
+Summary(pl):	Sterownik dbase dla hk_classes
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description driver-dbase
+dbase driver for hk_classes.
+
+%description driver-dbase -l pl
+Sterownik dbase dla hk_classes.
 
 %package driver-firebird
 Summary:	Firebird driver for hk_classes
@@ -238,14 +253,15 @@ Dokumentacja API dla hk_classes.
 	--with-hk_classes-dir=%{_libdir} \
 	--with-hk_classes-incdir=%{_includedir}/%{name} \
 	--with-hk_classes-drvdir=%{_libdir}/%{name}/drivers \
+	--with%{!?with_dbase:out}-dbase \
 	--with%{!?with_firebird:out}-firebird \
-	--with-mdb=%{?with_mdb:external}%{!?with_mdb:no} \
+	--with-%{!?with_mdb:out}-mdb \
 	--with%{!?with_mysql:out}-mysql \
 	--with%{!?with_odbc:out}-odbc \
-	--with-paradox=%{?with_paradox:external}%{!?with_paradox:no} \
+	--with-%{!?with_paradox:out}-paradox \
 	--with%{!?with_pgsql:out}-postgres \
-	--with%{!?with_sqlite2:out}-sqlite \
-	--with-sqlite3=%{?with_sqlite3:external}%{!?with_sqlite3:no} \
+	--with%{!?with_sqlite2:out-sqlite}%{?with_sqlite2:-sqlite2systemlibrary} \
+	--with%{!?with_sqlite3:out-sqlite3}%{?with_sqlite3:-sqlite3systemlibrary} \
 	--with%{!?with_xbase:out}-xbase \
 	%{?with_static_libs:--enable-static=yes}
 %{__make}
@@ -255,9 +271,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-# drivers are dlopened by *.so
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/drivers/lib*.{la,a}
 
 cp -a documentation apidocs
 # remove Makefiles from docs for %%files apidocs simplification
@@ -288,58 +301,74 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.a
 %endif
 
+%if %{with dbase}
+%files driver-dbase
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_dbasedriver.so*
+%{_libdir}/%{name}/drivers/libhk_dbasedriver.la
+%endif
+
 %if %{with firebird}
 %files driver-firebird
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_firebirddriver.so*
+%{_libdir}/%{name}/drivers/libhk_firebirddriver.la
 %endif
 
 %if %{with mdb}
 %files driver-mdb
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_mdbdriver.so*
+%{_libdir}/%{name}/drivers/libhk_mdbdriver.la
 %endif
 
 %if %{with mysql}
 %files driver-mysql
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_mysqldriver.so*
+%{_libdir}/%{name}/drivers/libhk_mysqldriver.la
 %endif
 
 %if %{with odbc}
 %files driver-odbc
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_odbcdriver.so*
+%{_libdir}/%{name}/drivers/libhk_odbcdriver.la
 %endif
 
 %if %{with paradox}
 %files driver-paradox
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_paradoxdriver.so*
+%{_libdir}/%{name}/drivers/libhk_paradoxdriver.la
 %endif
 
 %if %{with pgsql}
 %files driver-postgresql
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_postgresdriver.so*
+%{_libdir}/%{name}/drivers/libhk_postgresdriver.la
 %endif
 
 %if %{with sqlite2}
 %files driver-sqlite2
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_sqlite2driver.so*
+%{_libdir}/%{name}/drivers/libhk_sqlite2driver.la
 %endif
 
 %if %{with sqlite3}
 %files driver-sqlite3
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_sqlite3driver.so*
+%{_libdir}/%{name}/drivers/libhk_sqlite3driver.la
 %endif
 
 %if %{with xbase}
 %files driver-xbase
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_xbasedriver.so*
+%{_libdir}/%{name}/drivers/libhk_xbasedriver.la
 %endif
 
 %files -n python-%{name}
