@@ -14,7 +14,7 @@
 %bcond_without	static_libs # don't build static library
 #
 Summary:	Non-visual routines for database frontend applications
-Summary(pl):	Niegraficzne funkcje dla aplikacji bêd±cych frontendami do baz danych
+Summary(pl.UTF-8):   Niegraficzne funkcje dla aplikacji bÄ™dÄ…cych frontendami do baz danych
 Name:		hk_classes
 Version:	0.8
 Release:	2
@@ -52,145 +52,145 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 hk_classes is a set of non-visual routines which allow you to develop
 database frontend applications as easy as possible.
 
-%description -l pl
-hk_classes to zbiór niegraficznych funkcji, pozwalaj±cych na mo¿liwie
-naj³atwiejsze tworzenie aplikacji bêd±cych frontendami do baz danych.
+%description -l pl.UTF-8
+hk_classes to zbiÃ³r niegraficznych funkcji, pozwalajÄ…cych na moÅ¼liwie
+najÅ‚atwiejsze tworzenie aplikacji bÄ™dÄ…cych frontendami do baz danych.
 
 %package devel
 Summary:	Header files for hk_classes
-Summary(pl):	Pliki nag³ówkowe hk_classes
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe hk_classes
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for hk_classes.
 
-%description devel -l pl
-Pliki nag³ówkowe hk_classes.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe hk_classes.
 
 %package static
 Summary:	Static hk_classes library
-Summary(pl):	Statyczna biblioteka hk_classes
+Summary(pl.UTF-8):   Statyczna biblioteka hk_classes
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static hk_classes library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka hk_classes.
 
 %package driver-firebird
 Summary:	Firebird driver for hk_classes
-Summary(pl):	Sterownik Firebird dla hk_classes
+Summary(pl.UTF-8):   Sterownik Firebird dla hk_classes
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description driver-firebird
 Firebird driver for hk_classes.
 
-%description driver-firebird -l pl
+%description driver-firebird -l pl.UTF-8
 Sterownik Firebird dla hk_classes.
 
 %package driver-mysql
 Summary:	MySQL driver for hk_classes
-Summary(pl):	Sterownik MySQL dla hk_classes
+Summary(pl.UTF-8):   Sterownik MySQL dla hk_classes
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description driver-mysql
 MySQL driver for hk_classes.
 
-%description driver-mysql -l pl
+%description driver-mysql -l pl.UTF-8
 Sterownik MySQL dla hk_classes.
 
 %package driver-mdb
 Summary:	mdb driver for hk_classes
-Summary(pl):	Sterownik mdb dla hk_classes
+Summary(pl.UTF-8):   Sterownik mdb dla hk_classes
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description driver-mdb
 mdb driver for hk_classes.
 
-%description driver-mdb -l pl
+%description driver-mdb -l pl.UTF-8
 Sterownik mdb dla hk_classes.
 
 %package driver-odbc
 Summary:	unixODBC driver for hk_classes
-Summary(pl):	Sterownik unixODBC dla hk_classes
+Summary(pl.UTF-8):   Sterownik unixODBC dla hk_classes
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description driver-odbc
 unixODBC driver for hk_classes.
 
-%description driver-odbc -l pl
+%description driver-odbc -l pl.UTF-8
 Sterownik unixODBC dla hk_classes.
 
 %package driver-paradox
 Summary:	paradox driver for hk_classes
-Summary(pl):	Sterownik paradox dla hk_classes
+Summary(pl.UTF-8):   Sterownik paradox dla hk_classes
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description driver-paradox
 paradox driver for hk_classes.
 
-%description driver-paradox -l pl
+%description driver-paradox -l pl.UTF-8
 Sterownik paradox dla hk_classes.
 
 %package driver-postgresql
 Summary:	PostgreSQL driver for hk_classes
-Summary(pl):	Sterownik PostgreSQL dla hk_classes
+Summary(pl.UTF-8):   Sterownik PostgreSQL dla hk_classes
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description driver-postgresql
 PostgreSQL driver for hk_classes.
 
-%description driver-postgresql -l pl
+%description driver-postgresql -l pl.UTF-8
 Sterownik PostgreSQL dla hk_classes.
 
 %package driver-sqlite2
 Summary:	SQLite v2 driver for hk_classes
-Summary(pl):	Sterownik SQLite v2 dla hk_classes
+Summary(pl.UTF-8):   Sterownik SQLite v2 dla hk_classes
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description driver-sqlite2
 SQLite version 2.x driver for hk_classes.
 
-%description driver-sqlite2 -l pl
+%description driver-sqlite2 -l pl.UTF-8
 Sterownik SQLite w wersji 2.x dla hk_classes.
 
 %package driver-sqlite3
 Summary:	SQLite v3 driver for hk_classes
-Summary(pl):	Sterownik SQLite v3 dla hk_classes
+Summary(pl.UTF-8):   Sterownik SQLite v3 dla hk_classes
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description driver-sqlite3
 SQLite version 3.x driver for hk_classes.
 
-%description driver-sqlite3 -l pl
+%description driver-sqlite3 -l pl.UTF-8
 Sterownik SQLite w wersji 3.x dla hk_classes.
 
 %package driver-xbase
 Summary:	xbase driver for hk_classes
-Summary(pl):	Sterownik xbase dla hk_classes
+Summary(pl.UTF-8):   Sterownik xbase dla hk_classes
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description driver-xbase
 xbase driver for hk_classes.
 
-%description driver-xbase -l pl
+%description driver-xbase -l pl.UTF-8
 Sterownik xbase dla hk_classes.
 
 %package -n python-%{name}
 Summary:	Python interface to %{name}
-Summary(pl):	Interfejs do %{name} dla jezyka Python
+Summary(pl.UTF-8):   Interfejs do %{name} dla jezyka Python
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 %pyrequires_eq python-libs
@@ -198,30 +198,30 @@ Requires:	%{name} = %{version}-%{release}
 %description -n python-%{name}
 Python inteface to hk_classes.
 
-%description -n python-%{name} -l pl
+%description -n python-%{name} -l pl.UTF-8
 Pythonowy interfejs do klass hk_classes.
 
 %package tools
 Summary:	Commandline tools
-Summary(pl):	Narzêdzia dzia³aj±ce z linii poleceñ
+Summary(pl.UTF-8):   NarzÄ™dzia dziaÅ‚ajÄ…ce z linii poleceÅ„
 Group:		Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description tools
 Command line tools for hk_classes.
 
-%description tools -l pl
-Narzêdzia dzia³aj±ce z linii poleceñ dla hk_classes.
+%description tools -l pl.UTF-8
+NarzÄ™dzia dziaÅ‚ajÄ…ce z linii poleceÅ„ dla hk_classes.
 
 %package apidocs
 Summary:	API documentation for hk_classes
-Summary(pl):	Dokumentacja API dla hk_classes
+Summary(pl.UTF-8):   Dokumentacja API dla hk_classes
 Group:		Documentation
 
 %description apidocs
 API documentation for hk_classes.
 
-%description apidocs -l pl
+%description apidocs -l pl.UTF-8
 Dokumentacja API dla hk_classes.
 
 %prep
