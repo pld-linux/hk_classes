@@ -1,6 +1,6 @@
 # TODO:	- make python build *.pyo also and include it instead of *.py
 #	- patch3 should be rewritten to search for .pyc and .py not only .pyc and sent back
-#
+#  
 # Conditional build:
 %bcond_without	firebird
 %bcond_with	mdb
@@ -16,17 +16,17 @@
 Summary:	Non-visual routines for database frontend applications
 Summary(pl.UTF-8):	Niegraficzne funkcje dla aplikacji będących frontendami do baz danych
 Name:		hk_classes
-Version:	0.8
-Release:	2
+Version:	0.8.3
+Release:	0.1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/hk-classes/%{name}-%{version}.tar.gz
-# Source0-md5:	c5e3d5542037309127eddf532c91895b
-Patch0:		%{name}-dir.patch
-Patch1:		%{name}-link.patch
+# Source0-md5:	030ce063fc78a15e351429867d2a6bde
+# Patch0:		%{name}-dir.patch
+# Patch1:		%{name}-link.patch
 Patch2:		%{name}-iconv-in-libc.patch
-Patch3:		%{name}-PLD-search-for-pyc-and-in-usr-share.patch
-Patch4:		%{name}-mdbtools_checking.patch
+# Patch3:		%{name}-PLD-search-for-pyc-and-in-usr-share.patch
+# Patch4:		%{name}-mdbtools_checking.patch
 URL:		http://hk-classes.sourceforge.net/
 %{?with_firebird:BuildRequires:	Firebird-devel}
 BuildRequires:	autoconf >= 2.56
@@ -45,7 +45,7 @@ BuildRequires:	rpm-pythonprov
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
 %{?with_odbc:BuildRequires:	unixODBC-devel}
 %{?with_xbase:BuildRequires:	xbsql-devel}
-Conflicts:	knoda < 0.7.2
+Conflicts:	knoda < 0.8.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -226,11 +226,11 @@ Dokumentacja API dla hk_classes.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+#%%patch0 -p1
+#%%patch1 -p1
+%%patch2 -p1
+#%%patch3 -p1
+#%%patch4 -p1
 
 %build
 # supplied libtool is broken (C++)
@@ -278,20 +278,20 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
+%attr(755,root,root) %{_libdir}/%{name}/lib*.so.*.*
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/drivers
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/%{name}
-%{_libdir}/lib*.la
-%attr(755,root,root) %{_libdir}/lib*.so
+%{_libdir}/%{name}/lib*.la
+%attr(755,root,root) %{_libdir}/%{name}/lib*.so
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/%{name}/lib*.a
 %endif
 
 %if %{with firebird}
@@ -346,6 +346,7 @@ rm -rf $RPM_BUILD_ROOT
 %files driver-xbase
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_xbasedriver.so*
+%attr(755,root,root) %{_libdir}/%{name}/drivers/libhk_dbasedriver.so*
 %endif
 
 %files -n python-%{name}
@@ -361,4 +362,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files apidocs
 %defattr(644,root,root,755)
-%doc apidocs/api apidocs/tutorial
+#%%doc apidocs/api apidocs/tutorial
+%doc apidocs/tutorial
