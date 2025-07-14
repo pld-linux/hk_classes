@@ -225,7 +225,7 @@ Dokumentacja API dla hk_classes.
 
 %prep
 %setup -q
-%patch2 -p1
+%patch -P2 -p1
 
 %build
 # supplied libtool is broken (C++)
